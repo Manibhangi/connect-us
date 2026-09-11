@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect Us | Find Help. Find Work.</title>
+   
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <a href="#home" class="main-logo">
+
+            <img src="maniii.png" alt="Connect Us Logo">
+
+            <div class="logo-text">
+                <h2>
+                    <span class="connect">Connect</span><span class="us">Us</span>
+                </h2>
+
+                <p>For the People, By the People</p>
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <a href="auth.html" class="login-link">
+                Login
+            </a>
+
+            <a href="auth.html" class="signup-link">
+                Sign Up
+            </a>
+
+            <button class="menu-btn" onclick="openSettings()">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= SETTINGS ================= -->
+
+    <div id="settingsOverlay" class="settings-overlay">
+
+        <div class="settings-box">
+
+            <div class="settings-header">
+
+                <h2>Settings</h2>
+
+                <button onclick="closeSettings()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>🌙 Dark Mode</h3>
+                    <p>Use dark appearance</p>
+                </div>
+
+                <label class="switch">
+
+                    <input type="checkbox"
+                           id="darkModeToggle"
+                           onchange="toggleDarkMode()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>☀️ Light Mode</h3>
+                    <p>Use light appearance</p>
+                </div>
+
+                <button class="light-btn"
+                        onclick="setLightMode()">
+                    Light
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>👁️ Eye Protector</h3>
+                    <p>Reduce screen brightness</p>
+                </div>
+
+                <label class="switch">
+
+                    <input type="checkbox"
+                           id="eyeProtectorToggle"
+                           onchange="toggleEyeProtector()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row language-row">
+
+                <div>
+                    <h3>🌐 Language</h3>
+                    <p>Select your preferred language</p>
+                </div>
+
+                <select id="languageSelect"
+                        onchange="changeLanguage()">
+
+                    <option value="english">
+                        English
+                    </option>
+
+                    <option value="kannada">
+                        ಕನ್ನಡ
+                    </option>
+
+                    <option value="hindi">
+                        हिंदी
+                    </option>
+
+                    <option value="telugu">
+                        తెలుగు
+                    </option>
+
+                    <option value="tamil">
+                        தமிழ்
+                    </option>
+
+                    <option value="marathi">
+                        मराठी
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-logo">
+
+                <img src="maniii.png"
+                     alt="Connect Us Logo">
+
+            </div>
+
+
+            <div class="hero-label">
+                LOCAL SERVICES • REAL OPPORTUNITIES
+            </div>
+
+
+            <h1>
+                Find Help.
+                <span>Find Work.</span>
+            </h1>
+
+
+            <h2 class="hero-brand">
+                <span>Connect</span><strong>Us</strong>
+            </h2>
+
+
+            <p class="hero-tagline">
+                For the People, By the People
+            </p>
+
+
+            <p class="hero-description">
+
+                Connect customers with trusted local
+                skilled workers and help skilled people
+                discover nearby job opportunities.
+
+            </p>
+
+
+            <!-- SEARCH -->
+
+            <div class="hero-search">
+
+                <input
+                    type="text"
+                    id="homeSearch"
+                    placeholder="What service do you need?"
+                >
+
+                <button onclick="searchFromHome()">
+                    Find
+                </button>
+
+            </div>
+
+
+            <!-- IMPORTANT: DIRECT PAGE NAVIGATION -->
+
+            <div class="hero-buttons">
+
+                <button class="primary-btn"
+                        onclick="window.location.href='customer.html'">
+
+                    Find a Service
+
+                </button>
+
+
+                <button class="secondary-btn"
+                        onclick="window.location.href='worker.html'">
+
+                    Find Jobs
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO RIGHT -->
+
+        <div class="hero-right">
+
+            <div class="hero-card">
+
+                <div class="hero-card-logo">
+
+                    <img src="maniii.png"
+                         alt="Connect Us">
+
+                </div>
+
+
+                <div class="verified-badge">
+                    ✓ TRUSTED LOCAL CONNECTIONS
+                </div>
+
+
+                <h3>
+                    One Platform.
+                    <br>
+                    Many Opportunities.
+                </h3>
+
+
+                <div class="hero-stat">
+
+                    <div>
+                        <strong>Services</strong>
+                        <span>Local skilled workers</span>
+                    </div>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <div>
+                        <strong>Customers</strong>
+                        <span>Find help nearby</span>
+                    </div>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <div>
+                        <strong>Workers</strong>
+                        <span>Find new opportunities</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SERVICES ================= -->
+
+    <section id="services"
+             class="services-section">
+
+        <div class="section-heading">
+
+            <span>OUR SERVICES</span>
+
+            <h2>
+                Services You Can Trust
+            </h2>
+
+            <p>
+                Find skilled professionals for your
+                everyday needs.
+            </p>
+
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <div class="service-card"
+                 onclick="selectService('Plumber')">
+
+                <div class="service-icon">🔧</div>
+
+                <h3>Plumber</h3>
+
+                <p>
+                    Water and pipe repairs
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Electrician')">
+
+                <div class="service-icon">⚡</div>
+
+                <h3>Electrician</h3>
+
+                <p>
+                    Electrical services
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Carpenter')">
+
+                <div class="service-icon">🪚</div>
+
+                <h3>Carpenter</h3>
+
+                <p>
+                    Furniture and wood work
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Painter')">
+
+                <div class="service-icon">🎨</div>
+
+                <h3>Painter</h3>
+
+                <p>
+                    Home painting services
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Mechanic')">
+
+                <div class="service-icon">🔩</div>
+
+                <h3>Mechanic</h3>
+
+                <p>
+                    Vehicle repair services
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('House Cleaner')">
+
+                <div class="service-icon">🧹</div>
+
+                <h3>House Cleaner</h3>
+
+                <p>
+                    Professional cleaning
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('House Shifting')">
+
+                <div class="service-icon">📦</div>
+
+                <h3>House Shifting</h3>
+
+                <p>
+                    Packing and moving
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Move-in Cleaning')">
+
+                <div class="service-icon">🧽</div>
+
+                <h3>Move-in / Move-out Cleaning</h3>
+
+                <p>
+                    Complete cleaning
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('AC Technician')">
+
+                <div class="service-icon">❄️</div>
+
+                <h3>AC Technician</h3>
+
+                <p>
+                    AC repair and installation
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Home Repair')">
+
+                <div class="service-icon">🏠</div>
+
+                <h3>Home Repair</h3>
+
+                <p>
+                    General home repairs
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Gardener')">
+
+                <div class="service-icon">🌱</div>
+
+                <h3>Gardener</h3>
+
+                <p>
+                    Garden maintenance
+                </p>
+
+            </div>
+
+
+            <div class="service-card"
+                 onclick="selectService('Appliance Repair')">
+
+                <div class="service-icon">🔌</div>
+
+                <h3>Appliance Repair</h3>
+
+                <p>
+                    Home appliance repair
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= WHY CONNECT US ================= -->
+
+    <section class="why-section">
+
+        <div class="section-heading">
+
+            <span>WHY CONNECT US</span>
+
+            <h2>
+                Simple. Trusted. Local.
+            </h2>
+
+            <p>
+                Designed to make local services easier
+                for everyone.
+            </p>
+
+        </div>
+
+
+        <div class="why-grid">
+
+
+            <div class="why-card">
+
+                <div>🛡️</div>
+
+                <h3>
+                    Verified Workers
+                </h3>
+
+                <p>
+                    Connect with trusted local
+                    service providers.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div>📍</div>
+
+                <h3>
+                    Nearby Services
+                </h3>
+
+                <p>
+                    Find skilled workers close
+                    to your location.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div>💼</div>
+
+                <h3>
+                    Find Jobs
+                </h3>
+
+                <p>
+                    Skilled workers can discover
+                    new opportunities.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div>⭐</div>
+
+                <h3>
+                    Ratings & Reviews
+                </h3>
+
+                <p>
+                    Choose workers using ratings,
+                    reviews and experience.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section id="about"
+             class="about-section">
+
+        <div class="about-content">
+
+            <span class="section-label">
+                ABOUT CONNECT US
+            </span>
+
+            <h2>
+                Connecting People.
+                Creating Opportunities.
+            </h2>
+
+            <p>
+                Connect Us is a location-based digital
+                platform that connects customers with
+                local skilled workers.
+            </p>
+
+            <p>
+                Customers can find the services they need,
+                while skilled workers can discover
+                employment opportunities near them.
+            </p>
+
+            <p>
+                Our goal is to make local services
+                easier, safer and more accessible.
+            </p>
+
+        </div>
+
+
+        <div class="about-logo-card">
+
+            <img src="maniii.png"
+                 alt="Connect Us Logo">
+
+            <h3>
+                Connect Us
+            </h3>
+
+            <p>
+                For the People, By the People
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+
+    <section class="cta-section">
+
+        <img src="maniii.png"
+             alt="Connect Us Logo">
+
+        <h2>
+            Need Help or Looking for Work?
+        </h2>
+
+        <p>
+            Join the Connect Us community today.
+        </p>
+
+        <a href="auth.html">
+            Get Started →
+        </a>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img src="maniii.png"
+                 alt="Connect Us">
+
+            <div>
+
+                <h2>
+                    <span>Connect</span>Us
+                </h2>
+
+                <p>
+                    For the People, By the People
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            © 2026 Connect Us. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+   
+
+
+
+</body>
+</html>

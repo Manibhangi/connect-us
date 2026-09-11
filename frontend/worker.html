@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Worker Dashboard - Connect Us</title>
+   >
+
+    <style>
+   
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4faff;
+            color: #222;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .brand h2 {
+            color: #168bd5;
+            font-size: 22px;
+        }
+
+        .brand h2 span {
+            color: #222;
+        }
+
+        .logout {
+            background: #168bd5;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            background: #0875b8;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 0;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome h1 span {
+            color: #168bd5;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        .profile {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 35px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-photo {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #eaf7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .profile-info h2 {
+            margin-bottom: 6px;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .verified {
+            color: #168bd5;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .availability {
+            margin-left: auto;
+            background: #e9f9ee;
+            color: #159447;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+        }
+
+        .section-title p {
+            color: #777;
+            margin-top: 6px;
+        }
+
+        /* =========================
+           JOBS
+        ========================= */
+
+        .jobs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition: 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .job-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: #eaf7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .job-card h3 {
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .job-details {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .accept-btn {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 9px;
+            background: #168bd5;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .accept-btn:hover {
+            background: #0875b8;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+
+        /* =========================
+           NO JOBS
+        ========================= */
+
+        .no-jobs {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            color: #777;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            grid-column: 1 / -1;
+        }
+
+        .no-jobs h3 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error-box {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            color: #d33;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            grid-column: 1 / -1;
+        }
+
+        .retry-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #168bd5;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background: white;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .jobs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .brand h2 {
+                font-size: 18px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .availability {
+                margin-left: 0;
+            }
+
+            .jobs {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <img src="maniii.png" alt="Connect Us Logo">
+
+            <h2>
+                Connect<span>Us</span>
+            </h2>
+
+        </a>
+
+        <button class="logout" onclick="logout()">
+            Logout
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="container">
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <h1>
+                Welcome, <span id="userName">Worker</span> 👋
+            </h1>
+
+            <p>
+                Find nearby jobs and grow your work opportunities.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             WORKER PROFILE
+        ========================= -->
+
+        <section class="profile">
+
+            <div class="profile-header">
+
+                <div class="profile-photo">
+                    👨‍🔧
+                </div>
+
+                <div class="profile-info">
+
+                    <h2 id="profileName">
+                        Service Provider
+                    </h2>
+
+                    <p id="profileLocation">
+                        📍 Your Location
+                    </p>
+
+                    <p id="profilePhone">
+                        📞 Your Phone
+                    </p>
+
+                    <div class="verified">
+                        ✔ Verified Service Provider
+                    </div>
+
+                </div>
+
+                <div class="availability">
+                    ● Available for Work
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             AVAILABLE JOBS
+        ========================= -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>
+                    Available Jobs
+                </h2>
+
+                <p>
+                    Service requests from customers.
+                </p>
+
+            </div>
+
+
+            <!-- JavaScript will put real jobs here -->
+
+            <div
+                class="jobs"
+                id="jobsContainer">
+
+                <div class="loading">
+                    Loading available jobs...
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Connect Us — For the People, By the People
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        // =====================================
+        // CHECK LOGIN
+        // =====================================
+
+        const savedUser =
+            localStorage.getItem("connectUsUser");
+
+
+        if (!savedUser) {
+
+            window.location.href = "auth.html";
+
+        }
+
+
+        const user =
+            JSON.parse(savedUser);
+
+
+        // =====================================
+        // CHECK WORKER
+        // =====================================
+
+        if (user.role !== "worker") {
+
+            window.location.href = "customer.html";
+
+        }
+
+
+        // =====================================
+        // SHOW WORKER DETAILS
+        // =====================================
+
+        document.getElementById("userName").textContent =
+            user.name || "Worker";
+
+        document.getElementById("profileName").textContent =
+            user.name || "Service Provider";
+
+        document.getElementById("profileLocation").textContent =
+            "📍 " + (user.location || "Location not added");
+
+        document.getElementById("profilePhone").textContent =
+            "📞 " + (user.phone || "Phone not added");
+
+
+        // =====================================
+        // SERVICE ICON
+        // =====================================
+
+        function getServiceIcon(service) {
+
+            const icons = {
+
+                "Plumber": "🔧",
+
+                "Electrician": "⚡",
+
+                "Carpenter": "🪚",
+
+                "Painter": "🎨",
+
+                "Mechanic": "🔧",
+
+                "House Cleaner": "🧹",
+
+                "House Shifting": "📦",
+
+                "Move-in / Move-out Cleaning": "🧹",
+
+                "AC Technician": "❄️",
+
+                "Home Repair": "🏠",
+
+                "Gardener": "🌱",
+
+                "Appliance Repair": "🔌"
+
+            };
+
+            return icons[service] || "🛠️";
+        }
+
+
+        // =====================================
+        // LOAD JOBS FROM BACKEND
+        // =====================================
+
+        async function loadJobs() {
+
+            const jobsContainer =
+                document.getElementById("jobsContainer");
+
+
+            jobsContainer.innerHTML = `
+                <div class="loading">
+                    Loading available jobs...
+                </div>
+            `;
+
+
+            try {
+
+                console.log(
+                    "Getting jobs from backend..."
+                );
+
+
+                const response = await fetch(
+                    "http://localhost:5000/api/jobs/available"
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Jobs received:",
+                    data
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Failed to load jobs"
+                    );
+
+                }
+
+
+                // =================================
+                // NO JOBS
+                // =================================
+
+                if (
+                    !data.jobs ||
+                    data.jobs.length === 0
+                ) {
+
+                    jobsContainer.innerHTML = `
+
+                        <div class="no-jobs">
+
+                            <h3>
+                                No Jobs Available
+                            </h3>
+
+                            <p>
+                                There are no new service
+                                requests right now.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // =================================
+                // CLEAR OLD CONTENT
+                // =================================
+
+                jobsContainer.innerHTML = "";
+
+
+                // =================================
+                // CREATE JOB CARDS
+                // =================================
+
+                data.jobs.forEach(function(job) {
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "job-card";
+
+
+                    const customerName =
+                        job.customer &&
+                        job.customer.name
+                            ? job.customer.name
+                            : "Customer";
+
+
+                    const customerPhone =
+                        job.customer &&
+                        job.customer.phone
+                            ? job.customer.phone
+                            : "Not available";
+
+
+                    card.innerHTML = `
+
+                        <div class="job-icon">
+
+                            ${getServiceIcon(
+                                job.service
+                            )}
+
+                        </div>
+
+
+                        <h3>
+                            ${job.service}
+                        </h3>
+
+
+                        <div class="job-details">
+
+                            👤 Customer:
+                            ${customerName}
+
+                            <br>
+
+                            📞 Phone:
+                            ${customerPhone}
+
+                            <br>
+
+                            📝 Description:
+                            ${job.description}
+
+                            <br>
+
+                            📍 Location:
+                            ${job.location}
+
+                            <br>
+
+                            💰 Budget:
+                            ₹${job.budget}
+
+                            <br>
+
+                            🟢 Status:
+                            ${job.status}
+
+                        </div>
+
+
+                        <button
+                            class="accept-btn"
+                            onclick="acceptJob('${job._id}')">
+
+                            Accept Job
+
+                        </button>
+
+                    `;
+
+
+                    jobsContainer.appendChild(card);
+
+                });
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "ERROR LOADING JOBS:",
+                    error
+                );
+
+
+                jobsContainer.innerHTML = `
+
+                    <div class="error-box">
+
+                        <h3>
+                            Unable to Load Jobs
+                        </h3>
+
+                        <p>
+                            Make sure the backend
+                            server is running.
+                        </p>
+
+                        <button
+                            class="retry-btn"
+                            onclick="loadJobs()">
+
+                            Try Again
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // =====================================
+        // ACCEPT JOB
+        // =====================================
+
+        async function acceptJob(jobId) {
+
+            console.log(
+                "Accepting Job:",
+                jobId
+            );
+
+
+            if (!user.id) {
+
+                alert(
+                    "Worker ID not found. Please login again."
+                );
+
+                return;
+
+            }
+
+
+            const confirmAccept =
+                confirm(
+                    "Do you want to accept this job?"
+                );
+
+
+            if (!confirmAccept) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const response = await fetch(
+
+                    `http://localhost:5000/api/jobs/${jobId}/accept`,
+
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            worker: user.id
+
+                        })
+
+                    }
+
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Accept response:",
+                    data
+                );
+
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Failed to accept job"
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "Job Accepted Successfully! ✅"
+                );
+
+
+                // Reload available jobs
+
+                loadJobs();
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "ACCEPT JOB ERROR:",
+                    error
+                );
+
+
+                alert(
+                    "Cannot connect to backend."
+                );
+
+            }
+
+        }
+
+
+        // =====================================
+        // LOGOUT
+        // =====================================
+
+        function logout() {
+
+            localStorage.removeItem(
+                "connectUsUser"
+            );
+
+
+            localStorage.removeItem(
+                "connectUsToken"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        // =====================================
+        // LOAD JOBS WHEN PAGE OPENS
+        // =====================================
+
+        loadJobs();
+
+    </script>
+<script src="settings.js"></script>
+</body>
+
+</html>

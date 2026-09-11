@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Customer Dashboard - Connect Us
+    </title>
+    
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fc;
+            color: #222;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.08);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+
+        }
+
+
+        .logo img {
+
+            width: 45px;
+
+            height: 45px;
+
+            object-fit: contain;
+
+        }
+
+
+        .logo h2 {
+
+            color: #1677ff;
+
+        }
+
+
+        .logo span {
+
+            color: #111;
+
+        }
+
+
+        .logout-btn {
+
+            background: #1677ff;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 22px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+        }
+
+
+        .logout-btn:hover {
+
+            background: #0d5fd1;
+
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            width: 88%;
+
+            max-width: 1200px;
+
+            margin: 35px auto;
+
+        }
+
+
+        .welcome {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .welcome h1 {
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .welcome h1 span {
+
+            color: #1677ff;
+
+        }
+
+
+        .welcome p {
+
+            color: #666;
+
+        }
+
+
+        /* ================= SELECTED SERVICE ================= */
+
+        .selected-service {
+
+            background: #eaf5ff;
+
+            border: 1px solid #b8ddff;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .selected-service h3 {
+
+            color: #126dc2;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .selected-service p {
+
+            color: #555;
+
+        }
+
+
+        .clear-service {
+
+            margin-top: 10px;
+
+            padding: 7px 12px;
+
+            border: none;
+
+            background: #1677ff;
+
+            color: white;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            margin-bottom: 35px;
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,0.06);
+
+        }
+
+
+        .search-box input {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            outline: none;
+
+        }
+
+
+        .search-box input:focus {
+
+            border-color: #1677ff;
+
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* ================= SERVICES ================= */
+
+        .services {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .service-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,0.06);
+
+        }
+
+
+        .service-card h3 {
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .service-card p {
+
+            color: #666;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .request-btn {
+
+            width: 100%;
+
+            padding: 12px;
+
+            background: #1677ff;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+        .request-btn:hover {
+
+            background: #0d5fd1;
+
+        }
+
+
+        /* ================= WORKERS ================= */
+
+        .workers-section {
+
+            margin-top: 45px;
+
+        }
+
+
+        .workers {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .worker-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,0.06);
+
+        }
+
+
+        .worker-card h3 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .worker-card p {
+
+            color: #666;
+
+            margin: 7px 0;
+
+        }
+
+
+        .verified {
+
+            display: inline-block;
+
+            background: #e8f7ee;
+
+            color: #168044;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .worker-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .profile-btn {
+
+            flex: 1;
+
+            padding: 11px;
+
+            background: white;
+
+            color: #1677ff;
+
+            border: 1px solid #1677ff;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+        }
+
+
+        .worker-buttons .request-btn {
+
+            flex: 1;
+
+        }
+
+
+        /* ================= REQUESTS ================= */
+
+        .requests-section {
+
+            margin-top: 45px;
+
+            margin-bottom: 50px;
+
+        }
+
+
+        #myRequests {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .request-card {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.05);
+
+        }
+
+
+        .request-card h3 {
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .request-card p {
+
+            color: #555;
+
+            margin: 7px 0;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 6px 12px;
+
+            background: #fff3cd;
+
+            color: #856404;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            background: white;
+
+            color: #777;
+
+            margin-top: 40px;
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:600px) {
+
+            .container {
+
+                width: 92%;
+
+            }
+
+
+            .welcome h1 {
+
+                font-size: 25px;
+
+            }
+
+
+            .worker-buttons {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+
+            <img
+                src="maniii.png"
+                alt="Connect Us Logo"
+            >
+
+            <h2>
+                Connect<span>Us</span>
+            </h2>
+
+        </a>
+
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h1>
+
+                Welcome,
+
+                <span id="welcomeName">
+                    Customer
+                </span>
+
+                👋
+
+            </h1>
+
+
+            <p>
+                Find trusted local workers
+                for your service needs.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= SELECTED SERVICE ================= -->
+
+        <div
+            class="selected-service"
+            id="selectedServiceBox"
+            style="display:none;"
+        >
+
+            <h3>
+                Selected Service
+            </h3>
+
+
+            <p id="selectedServiceText">
+            </p>
+
+
+            <button
+                class="clear-service"
+                onclick="clearSelectedService()"
+            >
+                Clear
+            </button>
+
+        </div>
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="search-box">
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search for a service..."
+                onkeyup="searchServices()"
+            >
+
+        </div>
+
+
+
+        <!-- ================= SERVICES ================= -->
+
+        <h2 class="section-title">
+            Popular Services
+        </h2>
+
+
+        <div
+            class="services"
+            id="servicesContainer"
+        >
+
+
+            <!-- PLUMBER -->
+
+            <div class="service-card">
+
+                <h3>
+                    🔧 Plumber
+                </h3>
+
+                <p>
+                    Pipe repair, leakage fixing
+                    and plumbing services.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Plumber')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- ELECTRICIAN -->
+
+            <div class="service-card">
+
+                <h3>
+                    ⚡ Electrician
+                </h3>
+
+                <p>
+                    Electrical repair, wiring
+                    and installation.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Electrician')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- CARPENTER -->
+
+            <div class="service-card">
+
+                <h3>
+                    🪚 Carpenter
+                </h3>
+
+                <p>
+                    Furniture repair and
+                    woodwork services.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Carpenter')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- PAINTER -->
+
+            <div class="service-card">
+
+                <h3>
+                    🎨 Painter
+                </h3>
+
+                <p>
+                    Home painting and
+                    wall decoration.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Painter')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- MECHANIC -->
+
+            <div class="service-card">
+
+                <h3>
+                    🔩 Mechanic
+                </h3>
+
+                <p>
+                    Vehicle repair and
+                    maintenance.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Mechanic')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- HOUSE CLEANER -->
+
+            <div class="service-card">
+
+                <h3>
+                    🧹 House Cleaner
+                </h3>
+
+                <p>
+                    Professional home
+                    cleaning services.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('House Cleaner')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- HOUSE SHIFTING -->
+
+            <div class="service-card">
+
+                <h3>
+                    📦 House Shifting
+                </h3>
+
+                <p>
+                    Packing, transportation
+                    and furniture setup.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('House Shifting')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- MOVE IN -->
+
+            <div class="service-card">
+
+                <h3>
+                    🧽 Move-in / Move-out Cleaning
+                </h3>
+
+                <p>
+                    Complete cleaning before
+                    or after moving.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Move-in / Move-out Cleaning')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- AC -->
+
+            <div class="service-card">
+
+                <h3>
+                    ❄️ AC Technician
+                </h3>
+
+                <p>
+                    AC repair, service
+                    and installation.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('AC Technician')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- HOME REPAIR -->
+
+            <div class="service-card">
+
+                <h3>
+                    🏠 Home Repair
+                </h3>
+
+                <p>
+                    General home repair
+                    and maintenance.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Home Repair')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- GARDENER -->
+
+            <div class="service-card">
+
+                <h3>
+                    🌱 Gardener
+                </h3>
+
+                <p>
+                    Garden maintenance
+                    and plant care.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Gardener')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+
+            <!-- APPLIANCE -->
+
+            <div class="service-card">
+
+                <h3>
+                    🔌 Appliance Repair
+                </h3>
+
+                <p>
+                    Home appliance
+                    repair services.
+                </p>
+
+                <button
+                    type="button"
+                    class="request-btn"
+                    onclick="requestService('Appliance Repair')"
+                >
+                    Request Service
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= WORKERS ================= -->
+
+        <div class="workers-section">
+
+            <h2 class="section-title">
+                Verified Local Workers
+            </h2>
+
+
+            <div class="workers">
+
+
+                <!-- RAVI -->
+
+                <div class="worker-card">
+
+                    <h3>
+                        Ravi Kumar
+                    </h3>
+
+                    <span class="verified">
+                        ✓ Verified Worker
+                    </span>
+
+                    <p>
+                        📦 Service: House Shifting
+                    </p>
+
+                    <p>
+                        📍 2.1 km away
+                    </p>
+
+                    <p>
+                        ⭐ 4.8 Rating
+                    </p>
+
+                    <p>
+                        💰 Starting from ₹300
+                    </p>
+
+
+                    <div class="worker-buttons">
+
+                        <button
+                            type="button"
+                            class="profile-btn"
+                            onclick="viewProfile('Ravi Kumar')"
+                        >
+                            View Profile
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="request-btn"
+                            onclick="requestService('House Shifting')"
+                        >
+                            Request
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SURESH -->
+
+                <div class="worker-card">
+
+                    <h3>
+                        Suresh
+                    </h3>
+
+                    <span class="verified">
+                        ✓ Verified Worker
+                    </span>
+
+                    <p>
+                        ⚡ Service: Electrician
+                    </p>
+
+                    <p>
+                        📍 3.5 km away
+                    </p>
+
+                    <p>
+                        ⭐ 4.7 Rating
+                    </p>
+
+                    <p>
+                        💰 Starting from ₹350
+                    </p>
+
+
+                    <div class="worker-buttons">
+
+                        <button
+                            type="button"
+                            class="profile-btn"
+                            onclick="viewProfile('Suresh')"
+                        >
+                            View Profile
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="request-btn"
+                            onclick="requestService('Electrician')"
+                        >
+                            Request
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MANOJ -->
+
+                <div class="worker-card">
+
+                    <h3>
+                        Manoj
+                    </h3>
+
+                    <span class="verified">
+                        ✓ Verified Worker
+                    </span>
+
+                    <p>
+                        🔧 Service: Plumber
+                    </p>
+
+                    <p>
+                        📍 4.2 km away
+                    </p>
+
+                    <p>
+                        ⭐ 4.9 Rating
+                    </p>
+
+                    <p>
+                        💰 Starting from ₹250
+                    </p>
+
+
+                    <div class="worker-buttons">
+
+                        <button
+                            type="button"
+                            class="profile-btn"
+                            onclick="viewProfile('Manoj')"
+                        >
+                            View Profile
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="request-btn"
+                            onclick="requestService('Plumber')"
+                        >
+                            Request
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= MY REQUESTS ================= -->
+
+        <div class="requests-section">
+
+            <h2 class="section-title">
+                My Service Requests
+            </h2>
+
+
+            <div id="myRequests">
+
+                <div class="request-card">
+
+                    <p>
+                        Loading requests...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Connect Us —
+            For the People, By the People
+        </p>
+
+    </footer>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ==========================================
+           LOGIN CHECK
+        ========================================== */
+
+        const savedUser =
+            localStorage.getItem(
+                "connectUsUser"
+            );
+
+
+        if (!savedUser) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "auth.html";
+
+        }
+
+
+        const user =
+            savedUser
+                ? JSON.parse(savedUser)
+                : null;
+
+
+        /* ==========================================
+           SHOW CUSTOMER NAME
+        ========================================== */
+
+        if (user) {
+
+            const name =
+                document.getElementById(
+                    "welcomeName"
+                );
+
+            if (name) {
+
+                name.textContent =
+                    user.name ||
+                    "Customer";
+
+            }
+
+        }
+
+
+        /* ==========================================
+           SELECTED SERVICE FROM HOME PAGE
+        ========================================== */
+
+        function loadSelectedService() {
+
+            const service =
+                localStorage.getItem(
+                    "selectedService"
+                );
+
+
+            const box =
+                document.getElementById(
+                    "selectedServiceBox"
+                );
+
+
+            const text =
+                document.getElementById(
+                    "selectedServiceText"
+                );
+
+
+            if (
+                service &&
+                box &&
+                text
+            ) {
+
+                box.style.display =
+                    "block";
+
+                text.textContent =
+                    "You selected: " +
+                    service;
+
+            }
+
+        }
+
+
+        /* ==========================================
+           CLEAR SELECTED SERVICE
+        ========================================== */
+
+        function clearSelectedService() {
+
+            localStorage.removeItem(
+                "selectedService"
+            );
+
+
+            const box =
+                document.getElementById(
+                    "selectedServiceBox"
+                );
+
+
+            if (box) {
+
+                box.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* ==========================================
+           REQUEST SERVICE
+        ========================================== */
+
+        async function requestService(
+            serviceName
+        ) {
+
+            if (!user) {
+
+                alert(
+                    "Please login first."
+                );
+
+                window.location.href =
+                    "auth.html";
+
+                return;
+
+            }
+
+
+            const description =
+                window.prompt(
+                    "Describe the service you need:"
+                );
+
+
+            if (
+                description === null ||
+                description.trim() === ""
+            ) {
+
+                return;
+
+            }
+
+
+            const location =
+                window.prompt(
+                    "Enter your location:"
+                );
+
+
+            if (
+                location === null ||
+                location.trim() === ""
+            ) {
+
+                return;
+
+            }
+
+
+            const budget =
+                window.prompt(
+                    "Enter your expected budget:"
+                );
+
+
+            if (
+                budget === null ||
+                budget.trim() === ""
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/jobs",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    customer:
+                                        user.id,
+
+                                    service:
+                                        serviceName,
+
+                                    description:
+                                        description.trim(),
+
+                                    location:
+                                        location.trim(),
+
+                                    budget:
+                                        budget.trim()
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Failed to create service request."
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "Service request created successfully! ✅"
+                );
+
+
+                loadMyRequests();
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "REQUEST ERROR:",
+                    error
+                );
+
+
+                alert(
+                    "Cannot connect to backend.\n\n" +
+                    "Please make sure your backend is running:\n\n" +
+                    "node server.js"
+                );
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           LOAD MY REQUESTS
+        ========================================== */
+
+        async function loadMyRequests() {
+
+            const container =
+                document.getElementById(
+                    "myRequests"
+                );
+
+
+            if (!container || !user) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/jobs/available"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    container.innerHTML = `
+                        <div class="request-card">
+                            <p>
+                                Unable to load requests.
+                            </p>
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                const jobs =
+                    data.jobs || [];
+
+
+                const myJobs =
+                    jobs.filter(job => {
+
+                        if (!job.customer) {
+
+                            return false;
+
+                        }
+
+
+                        const customerId =
+                            job.customer._id ||
+                            job.customer.id ||
+                            job.customer;
+
+
+                        return (
+                            String(customerId) ===
+                            String(user.id)
+                        );
+
+                    });
+
+
+                if (
+                    myJobs.length === 0
+                ) {
+
+                    container.innerHTML = `
+
+                        <div class="request-card">
+
+                            <p>
+                                No requests yet.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                container.innerHTML =
+                    "";
+
+
+                myJobs.forEach(
+                    job => {
+
+                        const card =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "request-card";
+
+
+                        card.innerHTML = `
+
+                            <h3>
+                                ${escapeHTML(
+                                    job.service
+                                )}
+                            </h3>
+
+                            <p>
+                                📝 ${
+                                    escapeHTML(
+                                        job.description
+                                    )
+                                }
+                            </p>
+
+                            <p>
+                                📍 ${
+                                    escapeHTML(
+                                        job.location
+                                    )
+                                }
+                            </p>
+
+                            <p>
+                                💰 Budget:
+                                ₹${
+                                    escapeHTML(
+                                        String(
+                                            job.budget
+                                        )
+                                    )
+                                }
+                            </p>
+
+                            <span class="status">
+                                ${
+                                    escapeHTML(
+                                        job.status ||
+                                        "available"
+                                    )
+                                }
+                            </span>
+
+                        `;
+
+
+                        container.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "LOAD REQUEST ERROR:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="request-card">
+
+                        <p>
+                            Cannot connect to backend.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           SEARCH SERVICES
+        ========================================== */
+
+        function searchServices() {
+
+            const input =
+                document.getElementById(
+                    "searchInput"
+                );
+
+
+            if (!input) {
+
+                return;
+
+            }
+
+
+            const value =
+                input.value
+                    .toLowerCase()
+                    .trim();
+
+
+            const cards =
+                document.querySelectorAll(
+                    ".service-card"
+                );
+
+
+            cards.forEach(
+                card => {
+
+                    const text =
+                        card.textContent
+                            .toLowerCase();
+
+
+                    if (
+                        text.includes(value)
+                    ) {
+
+                        card.style.display =
+                            "block";
+
+                    }
+
+                    else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* ==========================================
+           VIEW WORKER PROFILE
+        ========================================== */
+
+        function viewProfile(name) {
+
+            alert(
+
+                "WORKER PROFILE\n\n" +
+
+                "Name: " +
+                name +
+
+                "\n\n✓ Verified Connect Us Worker" +
+
+                "\n⭐ Trusted local service provider"
+
+            );
+
+        }
+
+
+
+        /* ==========================================
+           HTML SAFETY
+        ========================================== */
+
+        function escapeHTML(value) {
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+
+        /* ==========================================
+           LOGOUT
+        ========================================== */
+
+        function logout() {
+
+            localStorage.removeItem(
+                "connectUsUser"
+            );
+
+
+            localStorage.removeItem(
+                "token"
+            );
+
+
+            localStorage.removeItem(
+                "selectedService"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        /* ==========================================
+           START
+        ========================================== */
+
+        loadSelectedService();
+
+        loadMyRequests();
+
+    </script>
+    <script src="settings.js"></script>
+
+
+</body>
+
+</html>
