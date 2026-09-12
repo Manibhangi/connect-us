@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/user");
 const PasswordReset = require("../models/PasswordReset");
 const RegistrationOTP = require("../models/RegistrationOTP");
 
