@@ -35,7 +35,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/auth/register",
+            "https://connect-us-br0m.onrender.com/api/auth/register",
             {
                 method: "POST",
                 headers: {
@@ -92,7 +92,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/auth/login",
+            "https://connect-us-br0m.onrender.com/api/auth/login",
             {
                 method: "POST",
                 headers: {
