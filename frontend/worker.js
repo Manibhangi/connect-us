@@ -16,7 +16,7 @@
 
     window.__connectUsWorkerRuntimeLoaded = true;
 
-    const API_URL = "http://localhost:5000/api";
+const API_URL = "https://YOUR-RENDER-URL.onrender.com/api";
 
     const TOKEN_KEY = "connectUsToken";
     const USER_KEY = "connectUsUser";

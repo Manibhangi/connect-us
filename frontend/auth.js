@@ -1,6 +1,6 @@
 "use strict";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://YOUR-RENDER-URL.onrender.com/api";
 
 let resetEmail = "";
 let resetOtp = "";
