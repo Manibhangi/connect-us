@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Connect Us connects you with trusted local professionals for everyday services."
+    >
+
+    <title>Connect Us — Local help, one connection away.</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* CONNECT US - MANI LOGO */
+        .brand-logo {
+            width: 68px;
+            height: 68px;
+            object-fit: contain;
+            display: block;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .footer-logo .brand-logo {
+            width: 58px;
+            height: 58px;
+        }
+
+        @media (max-width: 700px) {
+            .brand-logo {
+                width: 54px;
+                height: 54px;
+            }
+
+            .footer-logo .brand-logo {
+                width: 54px;
+                height: 54px;
+            }
+        }
+    </style>
+
+</head>
+<!-- =====================================================
+     CONNECT US - GLOBAL SETTINGS
+===================================================== -->
+
+<div
+    id="globalSettingsOverlay"
+    class="global-settings-overlay"
+    aria-hidden="true">
+</div>
+
+<section
+    id="globalSettingsPanel"
+    class="global-settings-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="globalSettingsTitle">
+
+    <div class="global-settings-header">
+
+        <div
+            id="globalSettingsTitle"
+            class="global-settings-title">
+
+            <span aria-hidden="true">⚙️</span>
+
+            <span data-setting-text="settings">
+                Settings
+            </span>
+
+        </div>
+
+        <button
+            type="button"
+            id="globalSettingsClose"
+            class="global-settings-close"
+            aria-label="Close settings">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <!-- LANGUAGE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌐</span>
+
+            <span data-setting-text="language">
+                Language
+            </span>
+
+        </div>
+
+        <select
+            id="globalLanguageSelect"
+            class="global-language-select"
+            aria-label="Language">
+
+            <option value="en">
+                English
+            </option>
+
+            <option value="kn">
+                Kannada
+            </option>
+
+            <option value="hi">
+                Hindi
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- DARK MODE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌙</span>
+
+            <span data-setting-text="darkMode">
+                Dark Mode
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalDarkModeToggle"
+                aria-label="Toggle dark mode">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- EYE COMFORT -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">👁️</span>
+
+            <span data-setting-text="eyeComfort">
+                Eye Comfort
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalEyeComfortToggle"
+                aria-label="Toggle eye comfort">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- HELP -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('For support, please contact Connect Us.')">
+
+        <span>
+
+            <span aria-hidden="true">❓</span>
+
+            <span data-setting-text="help">
+                Help & Support
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+
+    <!-- ABOUT -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('Connect Us — Local help, one connection away.')">
+
+        <span>
+
+            <span aria-hidden="true">ⓘ</span>
+
+            <span data-setting-text="about">
+                About
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+</section>
+<body>
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+    <a href="#home" class="brand">
+        <img src="mani.png" alt="Connect Us" class="brand-logo">
+
+        <div class="brand-name">
+            <strong>Connect<span>Us</span></strong>
+        </div>
+    </a>
+
+    <nav class="desktop-nav">
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#for-workers">For professionals</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <div class="nav-right">
+<a
+    href="auth.html?mode=login"
+    class="nav-login-visible"
+>
+    Log in
+</a>
+<button
+    type="button"
+    id="globalSettingsButton"
+    class="global-settings-button"
+    aria-label="Open settings"
+    aria-expanded="false"
+    onclick="openSettings()">
+
+    ⚙️ 
+
+</button>
+        
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- MOBILE NAV -->
+
+<div class="mobile-nav" id="mobileNav">
+
+    <a href="#services">Services</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#for-workers">For professionals</a>
+    <a href="#about">About</a>
+
+    <button
+        onclick="window.location.href='auth.html?mode=login'"
+    >
+        Log in
+    </button>
+
+    <button
+        onclick="window.location.href='auth.html?mode=signup'"
+    >
+        Get started
+    </button>
+
+</div>
+
+
+<main>
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-background"></div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            <span class="status-dot"></span>
+            LOCAL SERVICES, REIMAGINED
+        </div>
+
+        <h1>
+            Local help,
+            <br>
+            <span>one connection away.</span>
+        </h1>
+
+        <p class="hero-description">
+            Find trusted professionals around you for the things
+            that matter every day — from home repairs to moving,
+            cleaning and more.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <div class="search-field">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                    type="text"
+                    id="serviceSearch"
+                    placeholder="What service do you need?"
+                >
+
+            </div>
+
+            <div class="location-field">
+
+                <span>⌖</span>
+
+                <span id="locationText">
+                    Your location
+                </span>
+
+            </div>
+
+            <button
+                class="search-button"
+                onclick="startSearch()"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <div class="popular-searches">
+
+            <span>Popular:</span>
+
+            <button onclick="setSearch('Electrician')">
+                Electrician
+            </button>
+
+            <button onclick="setSearch('Plumber')">
+                Plumber
+            </button>
+
+            <button onclick="setSearch('Cleaning')">
+                Cleaning
+            </button>
+
+            <button onclick="setSearch('Home shifting')">
+                Home shifting
+            </button>
+
+        </div>
+
+
+        <!-- TRUST -->
+
+        <div class="hero-trust">
+
+            <div class="trust-avatars">
+
+                <span>R</span>
+                <span>A</span>
+                <span>S</span>
+                <span>M</span>
+
+            </div>
+
+            <div>
+
+                <strong>Built around local trust</strong>
+
+                <p>
+                    Connect with people in your community.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO VISUAL -->
+
+    <div class="hero-visual">
+
+        <div class="visual-glow"></div>
+
+        <div class="service-preview">
+
+            <div class="preview-header">
+
+                <div>
+                    <small>NEAR YOU</small>
+                    <h3>Available professionals</h3>
+                </div>
+
+                <span class="live-pill">
+                    ● Live
+                </span>
+
+            </div>
+
+
+            <div class="professional">
+
+                <div class="professional-avatar avatar-blue">
+                    AK
+                </div>
+
+                <div class="professional-info">
+
+                    <strong>Arun Kumar</strong>
+
+                    <span>
+                        Electrician · 1.2 km away
+                    </span>
+
+                    <div class="professional-rating">
+                        ★ 4.9
+                        <small>86 jobs</small>
+                    </div>
+
+                </div>
+
+                <span class="verified-mark">
+                    ✓
+                </span>
+
+            </div>
+
+
+            <div class="professional">
+
+                <div class="professional-avatar avatar-green">
+                    SP
+                </div>
+
+                <div class="professional-info">
+
+                    <strong>Shankar Plumbing</strong>
+
+                    <span>
+                        Plumbing · 2.4 km away
+                    </span>
+
+                    <div class="professional-rating">
+                        ★ 4.8
+                        <small>142 jobs</small>
+                    </div>
+
+                </div>
+
+                <span class="verified-mark">
+                    ✓
+                </span>
+
+            </div>
+
+
+            <div class="professional">
+
+                <div class="professional-avatar avatar-purple">
+                    MS
+                </div>
+
+                <div class="professional-info">
+
+                    <strong>Manoj Services</strong>
+
+                    <span>
+                        Home services · 3.1 km away
+                    </span>
+
+                    <div class="professional-rating">
+                        ★ 4.9
+                        <small>64 jobs</small>
+                    </div>
+
+                </div>
+
+                <span class="verified-mark">
+                    ✓
+                </span>
+
+            </div>
+
+
+            <button
+                class="preview-button"
+                onclick="window.location.href='auth.html?mode=login'"
+            >
+                Explore local professionals
+                <span>→</span>
+            </button>
+
+        </div>
+
+
+        <div class="floating-stat stat-top">
+
+            <span class="stat-icon">✓</span>
+
+            <div>
+                <strong>Verified</strong>
+                <small>Local professionals</small>
+            </div>
+
+        </div>
+
+
+        <div class="floating-stat stat-bottom">
+
+            <div class="mini-bars">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+            </div>
+
+            <div>
+                <strong>New opportunities</strong>
+                <small>Created every day</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     TRUST STRIP
+========================================= -->
+
+<section class="trust-strip">
+
+    <p>MADE FOR EVERYDAY LIFE</p>
+
+    <div>
+        <span>Home</span>
+        <span>Repairs</span>
+        <span>Moving</span>
+        <span>Cleaning</span>
+        <span>Technology</span>
+        <span>Local businesses</span>
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SERVICES
+========================================= -->
+
+<section class="section services-section" id="services">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            EXPLORE SERVICES
+        </div>
+
+        <h2>
+            Whatever needs doing,
+            <span>we'll help you find someone.</span>
+        </h2>
+
+        <p>
+            From quick fixes to bigger projects,
+            discover professionals who can get the job done.
+        </p>
+
+    </div>
+
+
+    <div class="services-grid">
+
+        <a
+            class="service-card featured"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ⚡
+            </div>
+
+            <div class="service-card-content">
+
+                <span>POPULAR</span>
+
+                <h3>Electrician</h3>
+
+                <p>
+                    Electrical repairs, installations and maintenance.
+                </p>
+
+                <strong>
+                    Explore service →
+                </strong>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ◇
+            </div>
+
+            <h3>Plumbing</h3>
+
+            <p>
+                Pipes, leaks, fittings and installations.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ✦
+            </div>
+
+            <h3>Cleaning</h3>
+
+            <p>
+                Home, office and deep cleaning services.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ▱
+            </div>
+
+            <h3>Carpentry</h3>
+
+            <p>
+                Furniture, repairs and custom woodwork.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ◉
+            </div>
+
+            <h3>Painting</h3>
+
+            <p>
+                Give your home or workspace a fresh look.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ↗
+            </div>
+
+            <h3>Home shifting</h3>
+
+            <p>
+                Moving support, loading and transportation.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ▣
+            </div>
+
+            <h3>Computer repair</h3>
+
+            <p>
+                Laptop, desktop and software support.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+
+        <a
+            class="service-card"
+            href="auth.html?mode=login"
+        >
+
+            <div class="service-card-icon">
+                ❄
+            </div>
+
+            <h3>AC services</h3>
+
+            <p>
+                Installation, servicing and maintenance.
+            </p>
+
+            <strong>
+                Explore →
+            </strong>
+
+        </a>
+
+    </div>
+
+
+    <div class="center-link">
+
+        <a href="auth.html?mode=login">
+            View all services
+            <span>→</span>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     HOW IT WORKS
+========================================= -->
+
+<section
+    class="section process-section"
+    id="how-it-works"
+>
+
+    <div class="process-layout">
+
+        <div class="process-intro">
+
+            <div class="eyebrow">
+                HOW IT WORKS
+            </div>
+
+            <h2>
+                Getting help
+                <span>shouldn't be complicated.</span>
+            </h2>
+
+            <p>
+                Connect Us makes finding local help as simple as
+                searching, connecting and getting the job done.
+            </p>
+
+            <button
+                class="dark-button"
+                onclick="window.location.href='auth.html?mode=signup'"
+            >
+                Get started free
+                <span>→</span>
+            </button>
+
+        </div>
+
+
+        <div class="process-steps">
+
+            <div class="process-step">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <div>
+
+                    <h3>Tell us what you need</h3>
+
+                    <p>
+                        Search for a service or describe the job
+                        you want help with.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="process-line"></div>
+
+
+            <div class="process-step">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <div>
+
+                    <h3>Discover local professionals</h3>
+
+                    <p>
+                        Browse available professionals and
+                        compare their services.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="process-line"></div>
+
+
+            <div class="process-step">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <div>
+
+                    <h3>Connect and get it done</h3>
+
+                    <p>
+                        Contact the right person and get your
+                        work completed.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FOR PROFESSIONALS
+========================================= -->
+
+<section
+    class="professional-section"
+    id="for-workers"
+>
+
+    <div class="professional-content">
+
+        <div class="eyebrow light">
+            FOR LOCAL PROFESSIONALS
+        </div>
+
+        <h2>
+            Your skills deserve
+            <span>more opportunities.</span>
+        </h2>
+
+        <p>
+            Join Connect Us and put your skills in front of people
+            who are looking for exactly what you do.
+        </p>
+
+        <div class="professional-points">
+
+            <div>
+                <span>01</span>
+                Create your professional profile
+            </div>
+
+            <div>
+                <span>02</span>
+                Showcase your services
+            </div>
+
+            <div>
+                <span>03</span>
+                Receive relevant job requests
+            </div>
+
+        </div>
+
+        <button
+            class="light-button"
+            onclick="window.location.href='auth.html?mode=signup&role=worker'"
+        >
+            Join as a professional
+            <span>→</span>
+        </button>
+
+    </div>
+
+
+    <div class="professional-visual">
+
+        <div class="opportunity-card">
+
+            <div class="opportunity-top">
+
+                <span>NEW REQUEST</span>
+
+                <small>Just now</small>
+
+            </div>
+
+            <h3>
+                Looking for an electrician
+            </h3>
+
+            <p>
+                Installation of 3 ceiling lights and
+                checking existing wiring.
+            </p>
+
+            <div class="request-details">
+
+                <span>⌖ 2.1 km</span>
+                <span>Today</span>
+                <span>₹ —</span>
+
+            </div>
+
+            <div class="request-actions">
+
+                <button>View request</button>
+
+                <span>● Available</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     TRUST / VALUES
+========================================= -->
+
+<section class="section trust-section">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            WHY CONNECT US
+        </div>
+
+        <h2>
+            Built around
+            <span>people, not just transactions.</span>
+        </h2>
+
+    </div>
+
+
+    <div class="values-grid">
+
+        <div class="value">
+
+            <span class="value-number">01</span>
+
+            <h3>Local first</h3>
+
+            <p>
+                Discover people and services within your
+                community.
+            </p>
+
+        </div>
+
+
+        <div class="value">
+
+            <span class="value-number">02</span>
+
+            <h3>Trust matters</h3>
+
+            <p>
+                Profiles and service information help you
+                make informed connections.
+            </p>
+
+        </div>
+
+
+        <div class="value">
+
+            <span class="value-number">03</span>
+
+            <h3>Opportunity for everyone</h3>
+
+            <p>
+                Skilled people can turn their abilities into
+                meaningful local opportunities.
+            </p>
+
+        </div>
+
+
+        <div class="value">
+
+            <span class="value-number">04</span>
+
+            <h3>Simple by design</h3>
+
+            <p>
+                No unnecessary complexity. Find, connect
+                and get things done.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="final-cta" id="about">
+
+    <div>
+
+        <div class="eyebrow">
+            START CONNECTING
+        </div>
+
+        <h2>
+            There's always someone
+            <span>who can help.</span>
+        </h2>
+
+        <p>
+            Find your next connection with Connect Us.
+        </p>
+
+        <div class="cta-buttons">
+
+            <button
+                class="dark-button"
+                onclick="window.location.href='auth.html?mode=signup'"
+            >
+                Create your account
+                <span>→</span>
+            </button>
+
+            <button
+                class="outline-button"
+                onclick="window.location.href='auth.html?mode=login'"
+            >
+                Log in
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="footer-main">
+
+        <div class="footer-brand">
+
+            <a href="#home" class="brand footer-logo">
+
+                <img src="mani.png" alt="Connect Us" class="brand-logo">
+
+                <strong>
+                    connect<span>us</span>
+                </strong>
+
+            </a>
+
+            <p>
+                Local help, one connection away.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Platform</h4>
+
+            <a href="#services">Services</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#for-workers">For professionals</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Company</h4>
+
+            <a href="#about">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Get started</h4>
+
+            <a href="auth.html?mode=login">
+                Log in
+            </a>
+
+            <a href="auth.html?mode=signup">
+                Create account
+            </a>
+
+            <a href="auth.html?mode=signup&role=worker">
+                Become a professional
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Connect Us
+        </span>
+
+        <span>
+            For the People, By the People.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+<script src="settings.js"></script>
+<script src="language-system.js"></script>
+
+</body>
+</html>

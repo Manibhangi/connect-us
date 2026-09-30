@@ -1,0 +1,560 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: black;
+
+    color: #111511;
+}
+
+
+.auth-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px 15px;
+}
+
+
+.auth-card {
+
+    width: 100%;
+
+    max-width: 560px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.08);
+
+    border: 1px solid #e2e7df;
+}
+
+
+/* BRAND */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+
+.brand img {
+
+    width: 55px;
+
+    height: 55px;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+}
+
+
+.brand h1 {
+
+    font-size: 24px;
+
+    margin-bottom: 4px;
+}
+
+
+.brand p {
+
+    color: #777d75;
+
+    font-size: 13px;
+}
+
+
+/* TABS */
+
+.auth-tabs {
+
+    display: flex;
+
+    padding: 5px;
+
+    background: #e9ede7;
+
+    border-radius: 14px;
+
+    margin-bottom: 30px;
+}
+
+
+.tab-btn {
+
+    flex: 1;
+
+    border: none;
+
+    background: transparent;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    color: #737a70;
+
+    cursor: pointer;
+}
+
+
+.tab-btn.active {
+
+    background: white;
+
+    color: #111511;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+}
+
+
+/* SECTIONS */
+
+.auth-section {
+
+    display: block;
+}
+
+
+.hidden {
+
+    display: none !important;
+}
+
+
+/* HEADING */
+
+.heading {
+
+    margin-bottom: 25px;
+}
+
+
+.heading span {
+
+    color: #607f20;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.heading h2 {
+
+    margin-top: 9px;
+
+    margin-bottom: 8px;
+
+    font-size: 29px;
+}
+
+
+.heading p {
+
+    color: #777d75;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* FORM */
+
+form {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+form > label {
+
+    margin-bottom: 8px;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+form input,
+form select {
+
+    width: 100%;
+
+    height: 56px;
+
+    border: 1px solid #dce2d9;
+
+    border-radius: 12px;
+
+    background: #fafbf9;
+
+    padding: 0 16px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+form input:focus,
+form select:focus {
+
+    border-color: #6c9026;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(108, 144, 38, 0.1);
+}
+
+
+/* PASSWORD */
+
+.password-box {
+
+    position: relative;
+}
+
+
+.password-box input {
+
+    padding-right: 75px;
+}
+
+
+.password-box button {
+
+    position: absolute;
+
+    right: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #60731f;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* FORGOT */
+
+.forgot-btn {
+
+    align-self: flex-end;
+
+    margin-top: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #607f20;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.forgot-btn:hover {
+
+    text-decoration: underline;
+}
+
+
+/* OTP */
+
+#otpInput {
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    letter-spacing: 8px;
+}
+
+
+/* TERMS */
+
+.terms {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    color: #737970;
+
+    cursor: pointer;
+}
+
+
+.terms input {
+
+    width: 17px;
+
+    height: 17px;
+
+    accent-color: #668724;
+}
+
+
+/* BUTTON */
+
+.main-btn {
+
+    width: 100%;
+
+    height: 60px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 24px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #111511;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.main-btn:hover {
+
+    transform: translateY(-1px);
+
+    opacity: 0.92;
+}
+
+
+/* SWITCH */
+
+.switch {
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e6eae4;
+
+    color: #777d75;
+
+    font-size: 14px;
+}
+
+
+.switch button {
+
+    border: none;
+
+    background: transparent;
+
+    color: #607f20;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+
+        padding: 15px;
+    }
+
+
+    .auth-card {
+
+        padding: 25px 18px;
+
+        border-radius: 18px;
+    }
+
+
+    .heading h2 {
+
+        font-size: 25px;
+    }
+
+
+    .brand img {
+
+        width: 45px;
+
+        height: 45px;
+    }
+
+}
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.nav-login {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 10px 22px !important;
+
+    background: #111511 !important;
+    color: #ffffff !important;
+
+    border: 1px solid #111511 !important;
+    border-radius: 999px !important;
+
+    font-size: 15px !important;
+    font-weight: 700 !important;
+
+    line-height: 1 !important;
+    text-decoration: none !important;
+
+    cursor: pointer !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease !important;
+}
+
+
+/* Hover */
+
+.nav-login:hover {
+    background: #8bd526 !important;
+    color: #111511 !important;
+
+    border-color: #8bd526 !important;
+
+    transform: translateY(-1px) !important;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+
+/* Click */
+
+.nav-login:active {
+    transform: translateY(0) !important;
+}
+
+
+/* Dark mode */
+
+html.connect-us-dark .nav-login,
+html.connectus-dark .nav-login,
+body.dark-mode .nav-login,
+body.dark .nav-login {
+    background: #ffffff !important;
+    color: #111511 !important;
+    border-color: #ffffff !important;
+}
+
+
+html.connect-us-dark .nav-login:hover,
+html.connectus-dark .nav-login:hover,
+body.dark-mode .nav-login:hover,
+body.dark .nav-login:hover {
+    background: #8bd526 !important;
+    color: #111511 !important;
+    border-color: #8bd526 !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .nav-login {
+        padding: 9px 18px !important;
+        font-size: 14px !important;
+    }
+
+}
