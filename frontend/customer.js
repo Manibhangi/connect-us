@@ -2,7 +2,7 @@
    CONNECT US - CUSTOMER
 ========================================= */
 
-const API_URL = "https://YOUR-RENDER-URL.onrender.com/api";
+const API_URL = "https://connect-us-1-dq8a.onrender.com/api";
 
 let allServices = [];
 let allJobs = [];
