@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Connect Us | Authentication</title>
+
+    <link
+        rel="stylesheet"
+        href="auth.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<!-- =====================================================
+     CONNECT US - GLOBAL SETTINGS
+===================================================== -->
+
+<div
+    id="globalSettingsOverlay"
+    class="global-settings-overlay"
+    aria-hidden="true">
+</div>
+
+
+<section
+    id="globalSettingsPanel"
+    class="global-settings-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="globalSettingsTitle">
+
+    <div class="global-settings-header">
+
+        <div
+            id="globalSettingsTitle"
+            class="global-settings-title">
+
+            <span aria-hidden="true">⚙️</span>
+
+            <span data-setting-text="settings">
+                Settings
+            </span>
+
+        </div>
+
+        <button
+            type="button"
+            id="globalSettingsClose"
+            class="global-settings-close"
+            aria-label="Close settings">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <!-- LANGUAGE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌐</span>
+
+            <span data-setting-text="language">
+                Language
+            </span>
+
+        </div>
+
+        <select
+            id="globalLanguageSelect"
+            class="global-language-select"
+            aria-label="Language">
+
+            <option value="en">
+                English
+            </option>
+
+            <option value="kn">
+                Kannada
+            </option>
+
+            <option value="hi">
+                Hindi
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- DARK MODE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌙</span>
+
+            <span data-setting-text="darkMode">
+                Dark Mode
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalDarkModeToggle"
+                aria-label="Toggle dark mode">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- EYE COMFORT -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">👁️</span>
+
+            <span data-setting-text="eyeComfort">
+                Eye Comfort
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalEyeComfortToggle"
+                aria-label="Toggle eye comfort">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- HELP -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('For support, please contact Connect Us.')">
+
+        <span>
+
+            <span aria-hidden="true">❓</span>
+
+            <span data-setting-text="help">
+                Help & Support
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+
+    <!-- ABOUT -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('Connect Us — Local help, one connection away.')">
+
+        <span>
+
+            <span aria-hidden="true">ⓘ</span>
+
+            <span data-setting-text="about">
+                About
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+</section>
+
+
+<body>
+
+
+<div class="auth-page">
+
+
+    <div class="auth-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <img
+                src="mani.png"
+                alt="Connect Us"
+            >
+
+            <div>
+
+                <h1>Connect Us</h1>
+
+                <p>
+                    Local help, one connection away.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABS -->
+
+        <div class="auth-tabs">
+
+            <button
+                id="loginTab"
+                class="tab-btn active"
+                onclick="showLogin()"
+                type="button"
+            >
+
+                Login
+
+            </button>
+
+
+            <button
+                id="signupTab"
+                class="tab-btn"
+                onclick="showSignup()"
+                type="button"
+            >
+
+                Sign up
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             LOGIN
+        ========================== -->
+
+        <div
+            id="loginForm"
+            class="auth-section"
+        >
+
+            <div class="heading">
+
+                <span>WELCOME BACK</span>
+
+                <h2>
+                    Login to Connect Us
+                </h2>
+
+                <p>
+                    Enter your registered email
+                    and password.
+                </p>
+
+            </div>
+
+
+            <form
+                onsubmit="loginUser(event)"
+            >
+
+                <label>
+                    Email address
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <label>
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        onclick="togglePassword('loginPassword', this)"
+                    >
+
+                        Show
+
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="forgot-btn"
+                    onclick="showForgotPassword()"
+                >
+
+                    Forgot password?
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                >
+
+                    <span>
+                        Login
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <div class="switch">
+
+                Don't have an account?
+
+                <button
+                    type="button"
+                    onclick="showSignup()"
+                >
+
+                    Create account
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SIGNUP
+        ========================== -->
+
+        <div
+            id="signupForm"
+            class="auth-section hidden"
+        >
+
+            <div class="heading">
+
+                <span>GET STARTED</span>
+
+                <h2>
+                    Create your account
+                </h2>
+
+                <p>
+                    Join Connect Us and start
+                    connecting locally.
+                </p>
+
+            </div>
+
+
+            <form
+                onsubmit="signupUser(event)"
+            >
+
+                <label>
+                    Full name
+                </label>
+
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+
+                <label>
+                    Email address
+                </label>
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+
+                <label>
+                    Phone number
+                </label>
+
+                <input
+                    type="tel"
+                    id="signupPhone"
+                    placeholder="Enter 10-digit phone number"
+                    maxlength="10"
+                    pattern="[0-9]{10}"
+                    inputmode="numeric"
+                    required
+                >
+
+
+                <label>
+                    Account type
+                </label>
+
+                <select
+                    id="signupRole"
+                    required
+                >
+
+                    <option value="">
+                        Select account type
+                    </option>
+
+                    <option value="customer">
+                        Customer — Find services
+                    </option>
+
+                    <option value="worker">
+                        Worker — Provide services
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Minimum 6 characters"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        onclick="togglePassword('signupPassword', this)"
+                    >
+
+                        Show
+
+                    </button>
+
+                </div>
+
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="termsCheckbox"
+                        required
+                    >
+
+                    <span>
+                        I agree to the Terms and
+                        Privacy Policy.
+                    </span>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                >
+
+                    <span>
+                        Create account
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <div class="switch">
+
+                Already have an account?
+
+                <button
+                    type="button"
+                    onclick="showLogin()"
+                >
+
+                    Login
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FORGOT PASSWORD
+        ========================== -->
+
+        <div
+            id="forgotForm"
+            class="auth-section hidden"
+        >
+
+            <div class="heading">
+
+                <span>PASSWORD RECOVERY</span>
+
+                <h2>
+                    Forgot your password?
+                </h2>
+
+                <p>
+                    Enter your registered email.
+                    We'll send you a 6-digit OTP.
+                </p>
+
+            </div>
+
+
+            <form
+                onsubmit="sendOtp(event)"
+            >
+
+                <label>
+                    Email address
+                </label>
+
+                <input
+                    type="email"
+                    id="forgotEmail"
+                    placeholder="Enter your registered email"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                >
+
+                    <span>
+                        Generate OTP
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <div class="switch">
+
+                Remember your password?
+
+                <button
+                    type="button"
+                    onclick="showLogin()"
+                >
+
+                    Back to Login
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             OTP
+        ========================== -->
+
+        <div
+            id="otpForm"
+            class="auth-section hidden"
+        >
+
+            <div class="heading">
+
+                <span>VERIFY EMAIL</span>
+
+                <h2>
+                    Enter OTP
+                </h2>
+
+                <p>
+                    Enter the 6-digit OTP sent
+                    to your email.
+                </p>
+
+            </div>
+
+
+            <form
+                onsubmit="verifyOtpUser(event)"
+            >
+
+                <label>
+                    Verification OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otpInput"
+                    placeholder="000000"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    inputmode="numeric"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                >
+
+                    <span>
+                        Verify OTP
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
+             RESET PASSWORD
+        ========================== -->
+
+        <div
+            id="resetForm"
+            class="auth-section hidden"
+        >
+
+            <div class="heading">
+
+                <span>NEW PASSWORD</span>
+
+                <h2>
+                    Create new password
+                </h2>
+
+                <p>
+                    Enter your new Connect Us password.
+                </p>
+
+            </div>
+
+
+            <form
+                onsubmit="resetPasswordUser(event)"
+            >
+
+                <label>
+                    New password
+                </label>
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Minimum 6 characters"
+                    minlength="6"
+                    required
+                >
+
+
+                <label>
+                    Confirm password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Enter password again"
+                    minlength="6"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                >
+
+                    <span>
+                        Reset Password
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="auth.js"></script>
+
+<script src="settings.js"></script>
+<script src="language-system.js"></script>
+
+
+</body>
+
+</html>

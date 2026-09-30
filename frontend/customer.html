@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect Us | Customer Dashboard</title>
+
+    <link rel="stylesheet" href="customer.css">
+      
+</head>
+<!-- =====================================================
+     CONNECT US - GLOBAL SETTINGS
+===================================================== -->
+
+<div
+    id="globalSettingsOverlay"
+    class="global-settings-overlay"
+    aria-hidden="true">
+</div>
+
+<section
+    id="globalSettingsPanel"
+    class="global-settings-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="globalSettingsTitle">
+
+    <div class="global-settings-header">
+
+        <div
+            id="globalSettingsTitle"
+            class="global-settings-title">
+
+            <span aria-hidden="true">⚙️</span>
+
+            <span data-setting-text="settings">
+                Settings
+            </span>
+
+        </div>
+
+        <button
+            type="button"
+            id="globalSettingsClose"
+            class="global-settings-close"
+            aria-label="Close settings">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <!-- LANGUAGE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌐</span>
+
+            <span data-setting-text="language">
+                Language
+            </span>
+
+        </div>
+
+        <select
+            id="globalLanguageSelect"
+            class="global-language-select"
+            aria-label="Language">
+
+            <option value="en">
+                English
+            </option>
+
+            <option value="kn">
+                Kannada
+            </option>
+
+            <option value="hi">
+                Hindi
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- DARK MODE -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">🌙</span>
+
+            <span data-setting-text="darkMode">
+                Dark Mode
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalDarkModeToggle"
+                aria-label="Toggle dark mode">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- EYE COMFORT -->
+
+    <div class="global-setting-row">
+
+        <div class="global-setting-info">
+
+            <span aria-hidden="true">👁️</span>
+
+            <span data-setting-text="eyeComfort">
+                Eye Comfort
+            </span>
+
+        </div>
+
+        <label class="global-switch">
+
+            <input
+                type="checkbox"
+                id="globalEyeComfortToggle"
+                aria-label="Toggle eye comfort">
+
+            <span class="global-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- HELP -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('For support, please contact Connect Us.')">
+
+        <span>
+
+            <span aria-hidden="true">❓</span>
+
+            <span data-setting-text="help">
+                Help & Support
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+
+    <!-- ABOUT -->
+
+    <button
+        type="button"
+        class="global-settings-link"
+        onclick="alert('Connect Us — Local help, one connection away.')">
+
+        <span>
+
+            <span aria-hidden="true">ⓘ</span>
+
+            <span data-setting-text="about">
+                About
+            </span>
+
+        </span>
+
+        <span aria-hidden="true">›</span>
+
+    </button>
+
+</section>
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <img src="mani.png" alt="Connect Us Logo">
+        <div>
+            <h2>Connect Us</h2>
+            <span>Local help, one connection away.</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <button class="nav-item active" onclick="showSection('dashboard', this)">
+            <span>⌂</span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" onclick="showSection('findServices', this)">
+            <span>⌕</span>
+            Find Services
+        </button>
+
+        <button class="nav-item" onclick="showSection('myJobs', this)">
+            <span>▣</span>
+            My Jobs
+        </button>
+
+        <button class="nav-item" onclick="showSection('requests', this)">
+            <span>◷</span>
+            Requests
+        </button>
+
+        <button class="nav-item" onclick="showSection('profile', this)">
+            <span>◉</span>
+            My Profile
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <button class="nav-item" onclick="openSettings()">
+            <span>⚙</span>
+            Settings
+        </button>
+
+        <button class="logout-btn" onclick="logoutUser()">
+            <span>↪</span>
+            Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <button class="menu-btn" onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div class="topbar-search">
+            <span>⌕</span>
+            <input
+                type="text"
+                id="globalSearch"
+                placeholder="Search services..."
+                oninput="searchServices()"
+            >
+        </div>
+
+        <div class="topbar-right">
+
+            <button class="notification-btn" onclick="showNotifications()">
+                🔔
+                <span id="notificationCount">0</span>
+            </button>
+
+            <div class="user-mini">
+
+                <div class="avatar" id="topAvatar">
+                    U
+                </div>
+
+                <div>
+                    <strong id="topUserName">User</strong>
+                    <small>Customer</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard" class="section active">
+
+        <div class="welcome">
+
+            <div>
+                <p class="eyebrow">CUSTOMER DASHBOARD</p>
+
+                <h1>
+                    Welcome back,
+                    <span id="welcomeName">User</span> 👋
+                </h1>
+
+                <p>
+                    Find trusted local professionals and get your work done easily.
+                </p>
+            </div>
+
+            <button class="primary-btn" onclick="openJobModal()">
+                + Post a Job
+            </button>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">▣</div>
+                <div>
+                    <span>Total Jobs</span>
+                    <strong id="totalJobs">0</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">◷</div>
+                <div>
+                    <span>Pending Jobs</span>
+                    <strong id="pendingJobs">0</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">✓</div>
+                <div>
+                    <span>Completed</span>
+                    <strong id="completedJobs">0</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">★</div>
+                <div>
+                    <span>Services Used</span>
+                    <strong id="servicesUsed">0</strong>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="section-heading">
+
+            <div>
+                <p class="eyebrow">QUICK ACTIONS</p>
+                <h2>What do you need?</h2>
+            </div>
+
+        </div>
+
+        <div class="quick-grid">
+
+            <button onclick="filterCategory('Home Services')">
+                <span>🏠</span>
+                <strong>Home Services</strong>
+                <small>Cleaning, shifting & repairs</small>
+            </button>
+
+            <button onclick="filterCategory('Electrician')">
+                <span>⚡</span>
+                <strong>Electrician</strong>
+                <small>Electrical work & repairs</small>
+            </button>
+
+            <button onclick="filterCategory('Plumber')">
+                <span>🔧</span>
+                <strong>Plumber</strong>
+                <small>Water & pipe services</small>
+            </button>
+
+            <button onclick="filterCategory('Mechanic')">
+                <span>🔩</span>
+                <strong>Mechanic</strong>
+                <small>Vehicle repair services</small>
+            </button>
+
+            <button onclick="filterCategory('Carpenter')">
+                <span>🪚</span>
+                <strong>Carpenter</strong>
+                <small>Furniture & wood work</small>
+            </button>
+
+            <button onclick="filterCategory('Other')">
+                <span>＋</span>
+                <strong>Other Services</strong>
+                <small>Find more professionals</small>
+            </button>
+
+        </div>
+
+
+        <!-- RECENT JOBS -->
+
+        <div class="section-heading">
+
+            <div>
+                <p class="eyebrow">ACTIVITY</p>
+                <h2>Recent Jobs</h2>
+            </div>
+
+            <button class="text-btn" onclick="showSectionByName('myJobs')">
+                View all →
+            </button>
+
+        </div>
+
+        <div id="recentJobs" class="jobs-container">
+
+            <div class="empty-state">
+                <div>📋</div>
+                <h3>No jobs yet</h3>
+                <p>Post your first job and connect with a local professional.</p>
+
+                <button class="primary-btn" onclick="openJobModal()">
+                    Post a Job
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FIND SERVICES ================= -->
+
+    <section id="findServices" class="section">
+
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">LOCAL SERVICES</p>
+                <h1>Find Services</h1>
+                <p>Discover professionals who can help you.</p>
+            </div>
+
+        </div>
+
+
+        <div class="service-search">
+
+            <div>
+                <span>⌕</span>
+                <input
+                    type="text"
+                    id="serviceSearch"
+                    placeholder="Search electrician, plumber, cleaner..."
+                    oninput="searchServices()"
+                >
+            </div>
+
+            <select id="categoryFilter" onchange="filterServices()">
+                <option value="">All Categories</option>
+                <option value="Home Services">Home Services</option>
+                <option value="Electrician">Electrician</option>
+                <option value="Plumber">Plumber</option>
+                <option value="Mechanic">Mechanic</option>
+                <option value="Carpenter">Carpenter</option>
+                <option value="Cleaner">Cleaner</option>
+                <option value="Painter">Painter</option>
+                <option value="Other">Other</option>
+            </select>
+
+        </div>
+
+
+        <div id="servicesGrid" class="services-grid">
+
+            <div class="loading">
+                Loading services...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MY JOBS ================= -->
+
+    <section id="myJobs" class="section">
+
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">YOUR ACTIVITY</p>
+                <h1>My Jobs</h1>
+                <p>Track all your posted jobs.</p>
+            </div>
+
+            <button class="primary-btn" onclick="openJobModal()">
+                + Post a Job
+            </button>
+
+        </div>
+
+
+        <div id="myJobsContainer" class="jobs-container">
+
+            <div class="empty-state">
+                <div>📋</div>
+                <h3>No jobs found</h3>
+                <p>Your posted jobs will appear here.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= REQUESTS ================= -->
+
+    <section id="requests" class="section">
+
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">SERVICE REQUESTS</p>
+                <h1>Requests</h1>
+                <p>Manage requests related to your jobs.</p>
+            </div>
+
+        </div>
+
+        <div id="requestsContainer" class="requests-container">
+
+            <div class="empty-state">
+                <div>◷</div>
+                <h3>No requests yet</h3>
+                <p>Professional responses to your jobs will appear here.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <section id="profile" class="section">
+
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">ACCOUNT</p>
+                <h1>My Profile</h1>
+                <p>Manage your Connect Us account.</p>
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-avatar" id="profileAvatar">
+                U
+            </div>
+
+            <div class="profile-info">
+
+                <h2 id="profileName">User</h2>
+
+                <p id="profileEmail">
+                    user@example.com
+                </p>
+
+                <p id="profilePhone">
+                    Phone not available
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <h2>Account Information</h2>
+
+            <form onsubmit="updateProfile(event)">
+
+                <label>
+                    Full Name
+                    <input type="text" id="profileNameInput" required>
+                </label>
+
+                <label>
+                    Email
+                    <input type="email" id="profileEmailInput" required>
+                </label>
+
+                <label>
+                    Phone
+                    <input type="tel" id="profilePhoneInput">
+                </label>
+
+                <button class="primary-btn" type="submit">
+                    Save Changes
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= JOB MODAL ================= -->
+
+<div class="modal-overlay" id="jobModal">
+
+    <div class="modal">
+
+        <button class="modal-close" onclick="closeJobModal()">
+            ×
+        </button>
+
+        <div class="modal-header">
+
+            <p class="eyebrow">NEW REQUEST</p>
+
+            <h2>Post a Job</h2>
+
+            <p>
+                Tell local professionals what you need.
+            </p>
+
+        </div>
+
+
+        <form onsubmit="postJob(event)">
+
+            <label>
+                Job Title
+                <input
+                    type="text"
+                    id="jobTitle"
+                    placeholder="Example: Need an electrician"
+                    required
+                >
+            </label>
+
+
+            <label>
+                Category
+
+                <select id="jobCategory" required>
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option value="Home Services">
+                        Home Services
+                    </option>
+
+                    <option value="Electrician">
+                        Electrician
+                    </option>
+
+                    <option value="Plumber">
+                        Plumber
+                    </option>
+
+                    <option value="Mechanic">
+                        Mechanic
+                    </option>
+
+                    <option value="Carpenter">
+                        Carpenter
+                    </option>
+
+                    <option value="Cleaner">
+                        Cleaner
+                    </option>
+
+                    <option value="Painter">
+                        Painter
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+                Description
+
+                <textarea
+                    id="jobDescription"
+                    rows="5"
+                    placeholder="Describe what you need..."
+                    required
+                ></textarea>
+
+            </label>
+
+
+            <label>
+                Location
+
+                <input
+                    type="text"
+                    id="jobLocation"
+                    placeholder="Enter your location"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Budget
+
+                <input
+                    type="number"
+                    id="jobBudget"
+                    placeholder="₹ Estimated budget"
+                    min="0"
+                >
+
+            </label>
+
+
+            <button class="primary-btn full-btn" type="submit">
+                Post Job
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<div class="modal-overlay" id="settingsOverlay">
+
+    <div class="modal settings-modal">
+
+        <button class="modal-close" onclick="closeSettings()">
+            ×
+        </button>
+
+        <p class="eyebrow">PREFERENCES</p>
+
+        <h2>Settings</h2>
+
+
+        <div class="setting-row">
+
+            <div>
+                <strong>Dark Mode</strong>
+                <small>Use dark appearance</small>
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="darkModeToggle"
+                    onchange="toggleDarkMode()"
+                >
+
+                <span></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div>
+                <strong>Language</strong>
+                <small>Choose your language</small>
+            </div>
+
+            <select id="languageSelect">
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="kn">
+                    ಕನ್ನಡ
+                </option>
+
+                <option value="hi">
+                    हिन्दी
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="customer.js"></script>
+<script src="settings.js"></script>
+<script src="language-system.js"></script>
+
+
+</body>
+</html>

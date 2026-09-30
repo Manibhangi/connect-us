@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect Us | Worker Dashboard</title>
+
+    <link rel="stylesheet" href="worker.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================================
+           WORKER PAGE ANTI-FLICKER FIX
+        ===================================================== */
+
+        html,
+        body {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        /* Stop repeated CSS animations from causing flashing */
+        .worker-page * {
+            animation: none !important;
+        }
+
+        .worker-page .dashboard-section {
+            animation: none !important;
+        }
+
+        .worker-page .modal {
+            animation: none !important;
+        }
+    </style>
+</head>
+
+<body class="worker-page">
+
+    <!-- =====================================================
+         GLOBAL SETTINGS
+    ===================================================== -->
+
+    <div
+        id="globalSettingsOverlay"
+        class="global-settings-overlay"
+        aria-hidden="true">
+    </div>
+
+    <section
+        id="globalSettingsPanel"
+        class="global-settings-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="globalSettingsTitle">
+
+        <div class="global-settings-header">
+
+            <div
+                id="globalSettingsTitle"
+                class="global-settings-title">
+
+                <span aria-hidden="true">⚙️</span>
+
+                <span data-i18n="ui.settings">
+                    Settings
+                </span>
+
+            </div>
+
+            <button
+                type="button"
+                id="globalSettingsClose"
+                class="global-settings-close"
+                aria-label="Close settings"
+                data-i18n-aria-label="ui.close">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- LANGUAGE -->
+
+        <div class="global-setting-row">
+
+            <div class="global-setting-info">
+
+                <span aria-hidden="true">
+                    🌐
+                </span>
+
+                <span data-i18n="ui.language">
+                    Language
+                </span>
+
+            </div>
+
+            <select
+                id="globalLanguageSelect"
+                class="global-language-select"
+                aria-label="Language">
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="kn">
+                    Kannada
+                </option>
+
+                <option value="hi">
+                    Hindi
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DARK MODE -->
+
+        <div class="global-setting-row">
+
+            <div class="global-setting-info">
+
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span data-i18n="ui.dark_mode">
+                    Dark Mode
+                </span>
+
+            </div>
+
+            <label class="global-switch">
+
+                <input
+                    type="checkbox"
+                    id="globalDarkModeToggle"
+                    aria-label="Toggle dark mode">
+
+                <span class="global-slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <!-- EYE COMFORT -->
+
+        <div class="global-setting-row">
+
+            <div class="global-setting-info">
+
+                <span aria-hidden="true">
+                    👁️
+                </span>
+
+                <span data-i18n="ui.eye_comfort">
+                    Eye Comfort
+                </span>
+
+            </div>
+
+            <label class="global-switch">
+
+                <input
+                    type="checkbox"
+                    id="globalEyeComfortToggle"
+                    aria-label="Toggle eye comfort">
+
+                <span class="global-slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <!-- HELP -->
+
+        <button
+            type="button"
+            class="global-settings-link"
+            onclick="alert('For support, please contact Connect Us.')">
+
+            <span>
+
+                <span aria-hidden="true">
+                    ❓
+                </span>
+
+                <span data-i18n="ui.help_support">
+                    Help & Support
+                </span>
+
+            </span>
+
+            <span aria-hidden="true">
+                ›
+            </span>
+
+        </button>
+
+
+        <!-- ABOUT -->
+
+        <button
+            type="button"
+            class="global-settings-link"
+            onclick="alert('Connect Us — Local help, one connection away.')">
+
+            <span>
+
+                <span aria-hidden="true">
+                    ⓘ
+                </span>
+
+                <span data-i18n="ui.about">
+                    About
+                </span>
+
+            </span>
+
+            <span aria-hidden="true">
+                ›
+            </span>
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside class="sidebar">
+
+        <a
+            href="index.html"
+            class="logo">
+
+            <img
+                src="mani.png"
+                alt="Connect Us">
+
+            <strong>
+                Connect<span>Us</span>
+            </strong>
+
+        </a>
+
+
+        <nav>
+
+            <button
+                class="nav-item active"
+                type="button"
+                onclick="showSection('overview')">
+
+                <span>
+                    ⌂
+                </span>
+
+                <span data-i18n="ui.dashboard">
+                    Dashboard
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                type="button"
+                onclick="showSection('services')">
+
+                <span>
+                    ▦
+                </span>
+
+                <span data-i18n="ui.my_services">
+                    My Services
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                type="button"
+                onclick="showSection('requests')">
+
+                <span>
+                    ◉
+                </span>
+
+                <span data-i18n="ui.job_requests">
+                    Job Requests
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                type="button"
+                onclick="showSection('profile')">
+
+                <span>
+                    ◯
+                </span>
+
+                <span data-i18n="ui.my_profile">
+                    My Profile
+                </span>
+
+            </button>
+
+        </nav>
+
+
+        <button
+            class="logout"
+            type="button"
+            onclick="logoutUser()">
+
+            ↪
+
+            <span data-i18n="ui.logout">
+                Logout
+            </span>
+
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span
+                    class="welcome-label"
+                    data-i18n="ui.worker_dashboard">
+
+                    WORKER DASHBOARD
+
+                </span>
+
+
+                <h1>
+
+                    <span data-i18n="ui.welcome_back">
+                        Welcome back,
+                    </span>
+
+                    <span
+                        id="workerName"
+                        data-user-content="true">
+
+                        Professional
+
+                    </span>
+
+                </h1>
+
+            </div>
+
+
+            <div class="profile-mini">
+
+                <div
+                    class="avatar"
+                    id="workerAvatar"
+                    data-user-content="true">
+
+                    W
+
+                </div>
+
+
+                <div>
+
+                    <strong
+                        id="workerNameTop"
+                        data-user-content="true">
+
+                        Professional
+
+                    </strong>
+
+
+                    <small data-i18n="ui.local_professional">
+
+                        Local Professional
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             OVERVIEW
+        ===================================================== -->
+
+        <section
+            id="overview"
+            class="dashboard-section">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <span data-i18n="ui.overview">
+                        OVERVIEW
+                    </span>
+
+                    <h2 data-i18n="ui.your_work_at_a_glance">
+                        Your work at a glance
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="showSection('services')">
+
+                    <span data-i18n="ui.manage_services">
+                        Manage services
+                    </span>
+
+                    →
+
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+
+                <!-- TOTAL EARNINGS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ₹
+                    </div>
+
+                    <span data-i18n="ui.total_earnings">
+                        Total earnings
+                    </span>
+
+                    <strong id="totalEarnings">
+                        ₹0
+                    </strong>
+
+                    <small data-i18n="ui.this_month">
+                        This month
+                    </small>
+
+                </div>
+
+
+                <!-- COMPLETED JOBS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        ✓
+                    </div>
+
+                    <span data-i18n="ui.completed_jobs">
+                        Completed jobs
+                    </span>
+
+                    <strong id="completedJobs">
+                        0
+                    </strong>
+
+                    <small data-i18n="ui.all_time">
+                        All time
+                    </small>
+
+                </div>
+
+
+                <!-- PENDING REQUESTS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon yellow">
+                        ◉
+                    </div>
+
+                    <span data-i18n="ui.pending_requests">
+                        Pending requests
+                    </span>
+
+                    <strong id="pendingRequests">
+                        0
+                    </strong>
+
+                    <small data-i18n="ui.need_your_attention">
+                        Need your attention
+                    </small>
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ★
+                    </div>
+
+                    <span data-i18n="ui.rating">
+                        Rating
+                    </span>
+
+                    <strong id="workerRating">
+                        5.0
+                    </strong>
+
+                    <small data-i18n="ui.customer_rating">
+                        Customer rating
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT REQUESTS -->
+
+            <div class="content-grid">
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span data-i18n="ui.recent_activity">
+                                RECENT ACTIVITY
+                            </span>
+
+                            <h3 data-i18n="ui.job_requests">
+                                Job requests
+                            </h3>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            onclick="showSection('requests')">
+
+                            <span data-i18n="ui.view_all">
+                                View all
+                            </span>
+
+                            →
+
+                        </button>
+
+                    </div>
+
+
+                    <div id="recentRequests">
+
+                        <div class="empty-state">
+
+                            <div>
+                                ◉
+                            </div>
+
+                            <strong data-i18n="ui.no_job_requests_yet">
+                                No job requests yet
+                            </strong>
+
+                            <p data-i18n="ui.new_customer_requests_will_appear_here">
+                                New customer requests will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE CARD -->
+
+                <div class="panel profile-card">
+
+                    <span data-i18n="ui.your_profile">
+                        YOUR PROFILE
+                    </span>
+
+
+                    <div class="profile-large">
+
+                        <div
+                            class="large-avatar"
+                            id="profileAvatar"
+                            data-user-content="true">
+
+                            W
+
+                        </div>
+
+
+                        <h3
+                            id="profileName"
+                            data-user-content="true">
+
+                            Professional
+
+                        </h3>
+
+
+                        <p id="profileRole">
+
+                            Local Service Professional
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="verification">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <span data-i18n="ui.profile_active">
+                            Profile active
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="outline-btn"
+                        onclick="showSection('profile')">
+
+                        <span data-i18n="ui.edit_profile">
+                            Edit profile
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SERVICES
+        ===================================================== -->
+
+        <section
+            id="services"
+            class="dashboard-section hidden">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <span data-i18n="ui.my_services">
+                        MY SERVICES
+                    </span>
+
+                    <h2 data-i18n="ui.services_you_provide">
+                        Services you provide
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="openServiceForm()">
+
+                    <span data-i18n="ui.add_service">
+                        + Add service
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="serviceList"
+                class="service-list">
+
+                <div class="empty-state">
+
+                    <div>
+                        ▦
+                    </div>
+
+                    <strong data-i18n="ui.no_services_added">
+                        No services added
+                    </strong>
+
+                    <p data-i18n="ui.add_your_first_service_so_customers_can_find_you">
+                        Add your first service so customers can find you.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="primary-btn"
+                        onclick="openServiceForm()">
+
+                        <span data-i18n="ui.add_your_first_service">
+                            Add your first service
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             REQUESTS
+        ===================================================== -->
+
+        <section
+            id="requests"
+            class="dashboard-section hidden">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <span data-i18n="ui.job_requests">
+                        JOB REQUESTS
+                    </span>
+
+                    <h2 data-i18n="ui.customer_requests">
+                        Customer requests
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="allRequests"
+                class="requests-list">
+
+                <div class="empty-state">
+
+                    <div>
+                        ◉
+                    </div>
+
+                    <strong data-i18n="ui.no_requests_yet">
+                        No requests yet
+                    </strong>
+
+                    <p data-i18n="ui.when_customers_request_your_service_they_will_appear_here">
+                        When customers request your service,
+                        they will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROFILE
+        ===================================================== -->
+
+        <section
+            id="profile"
+            class="dashboard-section hidden">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <span data-i18n="ui.profile">
+                        PROFILE
+                    </span>
+
+                    <h2 data-i18n="ui.your_professional_profile">
+                        Your professional profile
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-form panel">
+
+
+                <div class="profile-edit-avatar">
+
+                    <div
+                        class="large-avatar"
+                        id="editAvatar"
+                        data-user-content="true">
+
+                        W
+
+                    </div>
+
+
+                    <div>
+
+                        <strong
+                            id="editName"
+                            data-user-content="true">
+
+                            Professional
+
+                        </strong>
+
+
+                        <p data-i18n="ui.your_profile_is_visible_to_customers">
+                            Your profile is visible to customers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-field">
+
+                        <label data-i18n="ui.full_name">
+                            Full name
+                        </label>
+
+                        <input
+                            id="profileNameInput"
+                            type="text"
+                            placeholder="Your name"
+                            data-i18n-placeholder="ui.your_name">
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-field">
+
+                        <label data-i18n="ui.phone">
+                            Phone
+                        </label>
+
+                        <input
+                            id="profilePhoneInput"
+                            type="tel"
+                            placeholder="Phone number"
+                            data-i18n-placeholder="ui.phone_number">
+
+                    </div>
+
+
+                    <!-- ABOUT -->
+
+                    <div class="form-field full">
+
+                        <label data-i18n="ui.about_your_service">
+                            About your service
+                        </label>
+
+                        <textarea
+                            id="profileAboutInput"
+                            rows="5"
+                            placeholder="Tell customers about your work..."
+                            data-i18n-placeholder="ui.tell_customers_about_your_work"></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="saveProfile()">
+
+                    <span data-i18n="ui.save_changes">
+                        Save changes
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         SERVICE MODAL
+    ===================================================== -->
+
+    <div
+        id="serviceModal"
+        class="modal hidden">
+
+
+        <div class="modal-box">
+
+
+            <button
+                type="button"
+                class="close-modal"
+                onclick="closeServiceForm()">
+
+                ×
+
+            </button>
+
+
+            <span data-i18n="ui.add_service">
+                ADD SERVICE
+            </span>
+
+
+            <h2 data-i18n="ui.create_a_service">
+                Create a service
+            </h2>
+
+
+            <p data-i18n="ui.tell_customers_what_you_can_help_them_with">
+                Tell customers what you can help them with.
+            </p>
+
+
+            <!-- SERVICE NAME -->
+
+            <div class="form-field">
+
+                <label data-i18n="ui.service_name">
+                    Service name
+                </label>
+
+                <input
+                    id="serviceName"
+                    type="text"
+                    placeholder="Example: Electrical repair"
+                    data-i18n-placeholder="ui.example_electrical_repair">
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-field">
+
+                <label data-i18n="ui.category">
+                    Category
+                </label>
+
+
+                <select id="serviceCategory">
+
+                    <option
+                        value=""
+                        data-i18n="ui.select_category">
+
+                        Select category
+
+                    </option>
+
+
+                    <option
+                        value="electrician"
+                        data-i18n="ui.electrician">
+
+                        Electrician
+
+                    </option>
+
+
+                    <option
+                        value="plumber"
+                        data-i18n="ui.plumber">
+
+                        Plumber
+
+                    </option>
+
+
+                    <option
+                        value="cleaning"
+                        data-i18n="ui.cleaning">
+
+                        Cleaning
+
+                    </option>
+
+
+                    <option
+                        value="moving"
+                        data-i18n="ui.home_shifting">
+
+                        Home shifting
+
+                    </option>
+
+
+                    <option
+                        value="carpenter"
+                        data-i18n="ui.carpenter">
+
+                        Carpenter
+
+                    </option>
+
+
+                    <option
+                        value="painting"
+                        data-i18n="ui.painting">
+
+                        Painting
+
+                    </option>
+
+
+                    <option
+                        value="other"
+                        data-i18n="ui.other">
+
+                        Other
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="form-field">
+
+                <label data-i18n="ui.starting_price">
+                    Starting price
+                </label>
+
+                <input
+                    id="servicePrice"
+                    type="number"
+                    min="0"
+                    placeholder="₹">
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-field">
+
+                <label data-i18n="ui.description">
+                    Description
+                </label>
+
+                <textarea
+                    id="serviceDescription"
+                    rows="4"
+                    placeholder="Describe your service..."
+                    data-i18n-placeholder="ui.describe_your_service"></textarea>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="primary-btn full-btn"
+                onclick="addService()">
+
+                <span data-i18n="ui.add_service">
+                    Add service
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+
+         IMPORTANT:
+         1. translations.js FIRST
+         2. settings.js SECOND
+         3. worker.js LAST
+
+         language-system.js is intentionally NOT loaded.
+    ===================================================== -->
+
+    <script src="translations.js" defer></script>
+    <script src="settings.js" defer></script>
+    <script src="worker.js" defer></script>
+
+</body>
+
+</html>
