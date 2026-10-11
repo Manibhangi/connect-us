@@ -1,5 +1,5 @@
 /* =========================================
-   CONNECT US - CUSTOMER
+   CONNECT US - CUSTOMER DASHBOARD
 ========================================= */
 
 const API_URL = "https://connect-us-1-dq8a.onrender.com/api";
@@ -7,62 +7,34 @@ const API_URL = "https://connect-us-1-dq8a.onrender.com/api";
 let allServices = [];
 let allJobs = [];
 
-
-/* =========================================
-   AUTH
-========================================= */
+/* AUTHENTICATION */
 
 function getToken() {
     return localStorage.getItem("connectUsToken");
 }
 
-
 function getUser() {
     try {
-        return JSON.parse(
-            localStorage.getItem("connectUsUser")
-        );
+        return JSON.parse(localStorage.getItem("connectUsUser"));
     } catch (error) {
         console.error("GET USER ERROR:", error);
         return null;
     }
 }
 
-
 function getCustomerId() {
-
     const user = getUser();
-
-    if (!user) {
-        return null;
-    }
-
-    return (
-        user.id ||
-        user._id ||
-        user.userId ||
-        null
-    );
+    return user ? user.id || user._id || user.userId || null : null;
 }
 
-
 function authHeaders() {
-
-    const token = getToken();
-
     return {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token || ""}`
+        "Authorization": `Bearer ${getToken() || ""}`
     };
 }
 
-
-/* =========================================
-   CHECK LOGIN
-========================================= */
-
 function checkAuthentication() {
-
     const token = getToken();
     const user = getUser();
 
@@ -79,413 +51,100 @@ function checkAuthentication() {
     return true;
 }
 
-
-/* =========================================
-   USER INFO
-========================================= */
+/* USER INFORMATION */
 
 function loadUserInfo() {
-
     const user = getUser();
+    if (!user) return;
 
-    if (!user) {
-        return;
-    }
+    const name = user.name || "User";
+    const email = user.email || "";
+    const phone = user.phone || "";
 
-    const name =
-        user.name || "User";
+    const fields = {
+        welcomeName: name.split(" ")[0],
+        topUserName: name,
+        profileName: name,
+        profileEmail: email,
+        profilePhone: phone,
+        profileNameInput: name,
+        profileEmailInput: email,
+        profilePhoneInput: phone,
+        topAvatar: name.charAt(0).toUpperCase(),
+        profileAvatar: name.charAt(0).toUpperCase()
+    };
 
-    const email =
-        user.email || "user@example.com";
+    Object.entries(fields).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (!element) return;
 
-    const phone =
-        user.phone || "Phone not available";
-
-
-    const welcomeName =
-        document.getElementById("welcomeName");
-
-    const topUserName =
-        document.getElementById("topUserName");
-
-    const profileName =
-        document.getElementById("profileName");
-
-    const profileEmail =
-        document.getElementById("profileEmail");
-
-    const profilePhone =
-        document.getElementById("profilePhone");
-
-    const profileNameInput =
-        document.getElementById("profileNameInput");
-
-    const profileEmailInput =
-        document.getElementById("profileEmailInput");
-
-    const profilePhoneInput =
-        document.getElementById("profilePhoneInput");
-
-    const topAvatar =
-        document.getElementById("topAvatar");
-
-    const profileAvatar =
-        document.getElementById("profileAvatar");
-
-
-    if (welcomeName) {
-        welcomeName.textContent =
-            name.split(" ")[0];
-    }
-
-    if (topUserName) {
-        topUserName.textContent =
-            name;
-    }
-
-    if (profileName) {
-        profileName.textContent =
-            name;
-    }
-
-    if (profileEmail) {
-        profileEmail.textContent =
-            email;
-    }
-
-    if (profilePhone) {
-        profilePhone.textContent =
-            phone;
-    }
-
-    if (profileNameInput) {
-        profileNameInput.value =
-            name;
-    }
-
-    if (profileEmailInput) {
-        profileEmailInput.value =
-            email;
-    }
-
-    if (profilePhoneInput) {
-        profilePhoneInput.value =
-            user.phone || "";
-    }
-
-
-    const initial =
-        name.charAt(0).toUpperCase();
-
-
-    if (topAvatar) {
-        topAvatar.textContent =
-            initial;
-    }
-
-    if (profileAvatar) {
-        profileAvatar.textContent =
-            initial;
-    }
+        if ("value" in element) {
+            element.value = value;
+        } else {
+            element.textContent = value;
+        }
+    });
 }
 
-
-/* =========================================
-   NAVIGATION
-========================================= */
+/* NAVIGATION */
 
 function showSection(sectionId, button) {
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
 
-    document
-        .querySelectorAll(".section")
-        .forEach(section => {
-            section.classList.remove("active");
-        });
+    document.getElementById(sectionId)?.classList.add("active");
 
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
 
-    const section =
-        document.getElementById(sectionId);
+    button?.classList.add("active");
+    document.getElementById("sidebar")?.classList.remove("open");
 
-
-    if (section) {
-        section.classList.add("active");
-    }
-
-
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(item => {
-            item.classList.remove("active");
-        });
-
-
-    if (button) {
-        button.classList.add("active");
-    }
-
-
-    document
-        .getElementById("sidebar")
-        ?.classList.remove("open");
-
-
-    if (sectionId === "findServices") {
-        loadServices();
-    }
-
-    if (sectionId === "myJobs") {
-        loadMyJobs();
-    }
-
-    if (sectionId === "requests") {
-        loadMyJobs();
-    }
+    if (sectionId === "findServices") loadServices();
+    if (sectionId === "myJobs" || sectionId === "requests") loadMyJobs();
 }
-
 
 function showSectionByName(sectionId) {
-
-    const button =
-        document.querySelector(
-            `.nav-item[onclick*="${sectionId}"]`
-        );
-
-
-    showSection(
-        sectionId,
-        button
+    const button = document.querySelector(
+        `.nav-item[onclick*="${sectionId}"]`
     );
+    showSection(sectionId, button);
 }
-
-
-/* =========================================
-   SIDEBAR
-========================================= */
 
 function toggleSidebar() {
-
-    const sidebar =
-        document.getElementById("sidebar");
-
-    sidebar?.classList.toggle("open");
+    document.getElementById("sidebar")?.classList.toggle("open");
 }
 
+/* SERVICE CATEGORIES */
 
-/* =========================================
-   SERVICES
-========================================= */
+function normalizeCategory(category) {
+    const value = String(category || "Other").trim().toLowerCase();
 
-async function loadServices() {
+    const categories = {
+        "home": "Home Services",
+        "home service": "Home Services",
+        "home services": "Home Services",
+        "electrician": "Electrician",
+        "electrical": "Electrician",
+        "plumber": "Plumber",
+        "plumbing": "Plumber",
+        "mechanic": "Mechanic",
+        "carpenter": "Carpenter",
+        "cleaner": "Cleaner",
+        "cleaning": "Cleaner",
+        "house cleaning": "Cleaner",
+        "painter": "Painter",
+        "painting": "Painter",
+        "other": "Other"
+    };
 
-    const grid =
-        document.getElementById("servicesGrid");
-
-    if (!grid) {
-        return;
-    }
-
-
-    grid.innerHTML = `
-        <div class="loading">
-            Loading services...
-        </div>
-    `;
-
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/services`
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                "Unable to load services."
-            );
-        }
-
-
-        allServices =
-            data.services || [];
-
-
-        renderServices(
-            allServices
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "LOAD SERVICES ERROR:",
-            error
-        );
-
-
-        grid.innerHTML = `
-            <div class="empty-state">
-
-                <div>⚠️</div>
-
-                <h3>
-                    Unable to load services
-                </h3>
-
-                <p>
-                    Make sure your backend is running.
-                </p>
-
-            </div>
-        `;
-    }
+    return categories[value] || category || "Other";
 }
-
-
-/* =========================================
-   RENDER SERVICES
-========================================= */
-
-function renderServices(services) {
-
-    const grid =
-        document.getElementById(
-            "servicesGrid"
-        );
-
-
-    if (!grid) {
-        return;
-    }
-
-
-    if (!services.length) {
-
-        grid.innerHTML = `
-            <div class="empty-state">
-
-                <div>🔎</div>
-
-                <h3>
-                    No services found
-                </h3>
-
-                <p>
-                    Try another search or category.
-                </p>
-
-            </div>
-        `;
-
-        return;
-    }
-
-
-    grid.innerHTML =
-        services
-            .map(service => {
-
-                const icon =
-                    getServiceIcon(
-                        service.category
-                    );
-
-
-                const price =
-                    Number(
-                        service.price || 0
-                    );
-
-
-                const description =
-                    service.description ||
-                    "Professional local service.";
-
-
-                return `
-
-                    <div class="service-card">
-
-                        <div class="service-top">
-
-                            <div class="service-icon">
-                                ${icon}
-                            </div>
-
-                            <span class="available">
-                                Available
-                            </span>
-
-                        </div>
-
-
-                        <h3>
-                            ${escapeHtml(
-                                service.name
-                            )}
-                        </h3>
-
-
-                        <div class="service-category">
-                            ${escapeHtml(
-                                service.category
-                            )}
-                        </div>
-
-
-                        <p class="service-description">
-                            ${escapeHtml(
-                                description
-                            )}
-                        </p>
-
-
-                        <div class="service-bottom">
-
-                            <div class="service-price">
-
-                                ${
-                                    price > 0
-                                        ? `₹${price}`
-                                        : "Contact for price"
-                                }
-
-                            </div>
-
-
-                            <button
-                                type="button"
-                                class="service-contact"
-                                onclick="requestService('${service._id}')"
-                            >
-                                Request
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `;
-            })
-            .join("");
-}
-
-
-/* =========================================
-   SERVICE ICON
-========================================= */
 
 function getServiceIcon(category) {
-
     const icons = {
-
         "Home Services": "🏠",
         "Electrician": "⚡",
         "Plumber": "🔧",
@@ -494,1375 +153,669 @@ function getServiceIcon(category) {
         "Cleaner": "🧹",
         "Painter": "🎨",
         "Other": "🛠️"
-
     };
 
-
-    return (
-        icons[category] ||
-        "🛠️"
-    );
+    return icons[normalizeCategory(category)] || "🛠️";
 }
 
+/* FALLBACK CATALOGUE
+   These are display examples, not verified worker listings.
+*/
 
-/* =========================================
-   SEARCH
-========================================= */
+function getDefaultServices() {
+    return [
+        {
+            _id: "default-home",
+            name: "Home Services",
+            category: "Home Services",
+            description: "General household assistance.",
+            price: 0
+        },
+        {
+            _id: "default-electrician",
+            name: "Electrician",
+            category: "Electrician",
+            description: "Electrical repair and installation requests.",
+            price: 0
+        },
+        {
+            _id: "default-plumber",
+            name: "Plumber",
+            category: "Plumber",
+            description: "Plumbing repairs and maintenance.",
+            price: 0
+        },
+        {
+            _id: "default-mechanic",
+            name: "Mechanic",
+            category: "Mechanic",
+            description: "Vehicle repair and maintenance requests.",
+            price: 0
+        },
+        {
+            _id: "default-carpenter",
+            name: "Carpenter",
+            category: "Carpenter",
+            description: "Furniture and woodwork services.",
+            price: 0
+        },
+        {
+            _id: "default-cleaner",
+            name: "House Cleaning",
+            category: "Cleaner",
+            description: "House cleaning and shifting assistance.",
+            price: 0
+        },
+        {
+            _id: "default-painter",
+            name: "Painter",
+            category: "Painter",
+            description: "Home painting and related work.",
+            price: 0
+        }
+    ];
+}
+
+/* LOAD SERVICES */
+
+async function loadServices() {
+    const grid = document.getElementById("servicesGrid");
+    if (!grid) return;
+
+    grid.innerHTML = '<div class="loading">Loading services...</div>';
+
+    try {
+        const response = await fetch(`${API_URL}/services`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to load services.");
+        }
+
+        const services = Array.isArray(data)
+            ? data
+            : data.services ||
+              data.data?.services ||
+              data.data ||
+              data.results ||
+              [];
+
+        allServices = Array.isArray(services)
+            ? services
+                .filter(service => service && typeof service === "object")
+                .map((service, index) => ({
+                    ...service,
+                    _id: String(service._id || service.id || `service-${index}`),
+                    name: String(
+                        service.name || service.title || service.service || ""
+                    ).trim(),
+                    category: normalizeCategory(
+                        service.category || service.type || "Other"
+                    ),
+                    description: String(
+                        service.description || "Professional local service."
+                    ),
+                    price: service.price ?? service.startingPrice ?? 0
+                }))
+                .filter(service => service.name)
+            : [];
+
+        if (!allServices.length) {
+            allServices = getDefaultServices();
+        }
+
+        renderServices(allServices);
+    } catch (error) {
+        console.error("LOAD SERVICES ERROR:", error);
+
+        allServices = getDefaultServices();
+        renderServices(allServices);
+
+        const notice = document.createElement("p");
+        notice.className = "service-load-notice";
+        notice.textContent =
+            "Showing example services. Live service data is unavailable.";
+        grid.prepend(notice);
+    }
+}
+
+/* DISPLAY SERVICES */
+
+function renderServices(services) {
+    const grid = document.getElementById("servicesGrid");
+    if (!grid) return;
+
+    if (!services.length) {
+        grid.innerHTML = `
+            <div class="empty-state">
+                <div>🔎</div>
+                <h3>No services found</h3>
+                <p>Try another search or category.</p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = services.map(service => {
+        const icon = getServiceIcon(service.category);
+        const price = Number(service.price) || 0;
+
+        return `
+            <div class="service-card">
+                <div class="service-top">
+                    <div class="service-icon">${icon}</div>
+                    <span class="available">Service category</span>
+                </div>
+
+                <h3>${escapeHtml(service.name)}</h3>
+
+                <div class="service-category">
+                    ${escapeHtml(service.category)}
+                </div>
+
+                <p class="service-description">
+                    ${escapeHtml(service.description)}
+                </p>
+
+                <div class="service-bottom">
+                    <div class="service-price">
+                        ${price > 0 ? `₹${price}` : "Contact for price"}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="service-contact"
+                        data-service-id="${escapeHtml(service._id)}"
+                        onclick="requestService(this.dataset.serviceId)">
+                        Request
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* SEARCH AND FILTER */
 
 function searchServices() {
+    const search = (
+        document.getElementById("serviceSearch")?.value ||
+        document.getElementById("globalSearch")?.value ||
+        ""
+    ).trim().toLowerCase();
 
-    const searchInput =
-        document.getElementById(
-            "serviceSearch"
-        );
+    const category = document.getElementById("categoryFilter")?.value || "";
 
+    const filtered = allServices.filter(service => {
+        const matchesSearch = [
+            service.name,
+            service.category,
+            service.description
+        ].some(value => String(value || "").toLowerCase().includes(search));
 
-    const globalInput =
-        document.getElementById(
-            "globalSearch"
-        );
+        const matchesCategory =
+            !category || service.category === normalizeCategory(category);
 
+        return matchesSearch && matchesCategory;
+    });
 
-    const search =
-        (
-            searchInput?.value ||
-            globalInput?.value ||
-            ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    const category =
-        document.getElementById(
-            "categoryFilter"
-        )?.value || "";
-
-
-    const filtered =
-        allServices.filter(
-            service => {
-
-                const name =
-                    String(
-                        service.name || ""
-                    )
-                    .toLowerCase();
-
-
-                const serviceCategory =
-                    String(
-                        service.category || ""
-                    )
-                    .toLowerCase();
-
-
-                const description =
-                    String(
-                        service.description || ""
-                    )
-                    .toLowerCase();
-
-
-                const matchesSearch =
-                    !search ||
-                    name.includes(search) ||
-                    serviceCategory.includes(search) ||
-                    description.includes(search);
-
-
-                const matchesCategory =
-                    !category ||
-                    service.category === category;
-
-
-                return (
-                    matchesSearch &&
-                    matchesCategory
-                );
-            }
-        );
-
-
-    renderServices(
-        filtered
-    );
+    renderServices(filtered);
 }
-
 
 function filterServices() {
     searchServices();
 }
 
-
 function filterCategory(category) {
+    showSectionByName("findServices");
 
-    showSectionByName(
-        "findServices"
-    );
-
-
-    const filter =
-        document.getElementById(
-            "categoryFilter"
-        );
-
-
-    if (filter) {
-        filter.value =
-            category;
-    }
-
+    const filter = document.getElementById("categoryFilter");
+    if (filter) filter.value = category;
 
     searchServices();
 }
 
-
-/* =========================================
-   REQUEST SERVICE
-========================================= */
+/* REQUEST A SERVICE */
 
 function requestService(serviceId) {
-
-    const service =
-        allServices.find(
-            item =>
-                item._id === serviceId
-        );
-
-
+    const service = allServices.find(item => item._id === serviceId);
     if (!service) {
+        alert("Service not found. Please refresh and try again.");
         return;
     }
 
+    const title = document.getElementById("jobTitle");
+    const category = document.getElementById("jobCategory");
+    const description = document.getElementById("jobDescription");
 
-    const jobTitle =
-        document.getElementById(
-            "jobTitle"
-        );
-
-
-    const jobCategory =
-        document.getElementById(
-            "jobCategory"
-        );
-
-
-    const jobDescription =
-        document.getElementById(
-            "jobDescription"
-        );
-
-
-    if (jobTitle) {
-
-        jobTitle.value =
-            service.name ||
-            "";
+    if (title) title.value = service.name;
+    if (category) category.value = service.category;
+    if (description) {
+        description.value = `I would like to request the "${service.name}" service.`;
     }
-
-
-    if (jobCategory) {
-
-        jobCategory.value =
-            service.category ||
-            "";
-    }
-
-
-    if (jobDescription) {
-
-        jobDescription.value =
-            `I would like to request the "${service.name}" service.`;
-    }
-
 
     openJobModal();
 }
 
-
-/* =========================================
-   JOB MODAL
-========================================= */
+/* JOB MODAL */
 
 function openJobModal() {
-
-    document
-        .getElementById("jobModal")
-        ?.classList.add("show");
+    document.getElementById("jobModal")?.classList.add("show");
 }
-
 
 function closeJobModal() {
-
-    document
-        .getElementById("jobModal")
-        ?.classList.remove("show");
+    document.getElementById("jobModal")?.classList.remove("show");
 }
 
-
-/* =========================================
-   POST JOB
-========================================= */
+/* POST A JOB */
 
 async function postJob(event) {
-
     event.preventDefault();
 
+    const user = getUser();
 
-    const user =
-        getUser();
-
-
-    if (!user) {
-
-        alert(
-            "Please login again."
-        );
-
+    if (!user || !getToken()) {
+        alert("Please log in again.");
         logoutUser();
-
         return;
     }
 
-
-    const customerId =
-        user.id ||
-        user._id ||
-        user.userId;
-
+    const customerId = getCustomerId();
 
     if (!customerId) {
-
-        console.error(
-            "USER OBJECT:",
-            user
-        );
-
-
-        alert(
-            "Customer account information is missing. Please login again."
-        );
-
+        alert("Customer account information is missing. Please log in again.");
         return;
     }
 
-
-    const titleElement =
-        document.getElementById(
-            "jobTitle"
-        );
-
-
-    const categoryElement =
-        document.getElementById(
-            "jobCategory"
-        );
-
-
-    const descriptionElement =
-        document.getElementById(
-            "jobDescription"
-        );
-
-
-    const locationElement =
-        document.getElementById(
-            "jobLocation"
-        );
-
-
-    const budgetElement =
-        document.getElementById(
-            "jobBudget"
-        );
-
-
-    const title =
-        titleElement?.value
-            ?.trim() || "";
-
-
-    const category =
-        categoryElement?.value
-            ?.trim() || "";
-
-
+    const title = document.getElementById("jobTitle")?.value.trim() || "";
+    const category = document.getElementById("jobCategory")?.value.trim() || "";
     const description =
-        descriptionElement?.value
-            ?.trim() || "";
+        document.getElementById("jobDescription")?.value.trim() || "";
+    const location = document.getElementById("jobLocation")?.value.trim() || "";
+    const budgetValue = document.getElementById("jobBudget")?.value.trim() || "0";
+    const budget = Number(budgetValue);
 
-
-    const location =
-        locationElement?.value
-            ?.trim() || "";
-
-
-    const budget =
-        budgetElement?.value
-            ?.trim() || "0";
-
-
-    /* =========================================
-       VALIDATION
-    ========================================= */
-
-    if (!title) {
-
-        alert(
-            "Please enter the job title."
-        );
-
+    if (!title || !category || !description || !location) {
+        alert("Please complete all required job fields.");
         return;
     }
 
-
-    if (!category) {
-
-        alert(
-            "Please select a category."
-        );
-
+    if (!Number.isFinite(budget) || budget < 0) {
+        alert("Please enter a valid budget.");
         return;
     }
-
-
-    if (!description) {
-
-        alert(
-            "Please enter the job description."
-        );
-
-        return;
-    }
-
-
-    if (!location) {
-
-        alert(
-            "Please enter your location."
-        );
-
-        return;
-    }
-
-
-    /* =========================================
-       BACKEND DATA
-    ========================================= */
 
     const jobData = {
-
-        customer:
-            customerId,
-
-        service:
-            title,
-
-        description:
-            description,
-
-        location:
-            location,
-
-        budget:
-            Number(budget) || 0
-
+        customer: customerId,
+        service: title,
+        description,
+        location,
+        budget
     };
 
-
-    console.log(
-        "SENDING JOB:",
-        jobData
-    );
-
-
     try {
+        const response = await fetch(`${API_URL}/jobs`, {
+            method: "POST",
+            headers: authHeaders(),
+            body: JSON.stringify(jobData)
+        });
 
-        const response =
-            await fetch(
-                `${API_URL}/jobs`,
-                {
-                    method: "POST",
+        const data = await response.json().catch(() => ({}));
 
-                    headers:
-                        authHeaders(),
-
-                    body:
-                        JSON.stringify(
-                            jobData
-                        )
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        console.log(
-            "JOB RESPONSE:",
-            data
-        );
-
-
-        /* =========================================
-           SESSION EXPIRED
-        ========================================= */
-
-        if (
-            response.status === 401
-        ) {
-
-            alert(
-                "Your session has expired. Please login again."
-            );
-
+        if (response.status === 401) {
+            alert("Your session has expired. Please log in again.");
             logoutUser();
-
             return;
         }
-
-
-        /* =========================================
-           BACKEND ERROR
-        ========================================= */
 
         if (!response.ok) {
-
-            alert(
-                data.message ||
-                "Unable to post job."
-            );
-
-            return;
+            throw new Error(data.message || "Unable to post job.");
         }
 
-
-        /* =========================================
-           SUCCESS
-        ========================================= */
-
-        alert(
-            "Job posted successfully! ✅"
-        );
-
+        alert("Job posted successfully!");
 
         closeJobModal();
-
-
-        document
-            .querySelector(
-                "#jobModal form"
-            )
-            ?.reset();
-
+        document.querySelector("#jobModal form")?.reset();
 
         await loadMyJobs();
-
         updateDashboardStats();
-
-
     } catch (error) {
-
-        console.error(
-            "POST JOB ERROR:",
-            error
-        );
-
-
-        alert(
-            "Unable to connect to the server."
-        );
+        console.error("POST JOB ERROR:", error);
+        alert(error.message || "Unable to connect to the server.");
     }
 }
 
-
-/* =========================================
-   LOAD MY JOBS
-========================================= */
+/* LOAD CUSTOMER JOBS */
 
 async function loadMyJobs() {
+    const customerId = getCustomerId();
 
-    const customerId =
-        getCustomerId();
-
-
-    if (!customerId) {
-        return;
-    }
-
+    if (!customerId || !getToken()) return;
 
     try {
+        const response = await fetch(
+            `${API_URL}/jobs/my?customer=${encodeURIComponent(customerId)}`,
+            {
+                method: "GET",
+                headers: authHeaders()
+            }
+        );
 
-        const response =
-            await fetch(
-                `${API_URL}/jobs/my?customer=${encodeURIComponent(customerId)}`,
-                {
-                    method: "GET",
-                    headers: authHeaders()
-                }
-            );
-
-
-        if (
-            response.status === 401
-        ) {
-
+        if (response.status === 401) {
             logoutUser();
-
             return;
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                "Unable to load jobs."
-            );
+            throw new Error(data.message || "Unable to load jobs.");
         }
 
-
-        allJobs =
-            data.jobs || [];
-
+        allJobs = Array.isArray(data.jobs)
+            ? data.jobs
+            : Array.isArray(data.data)
+                ? data.data
+                : [];
 
         renderJobs();
-
         updateDashboardStats();
-
-
     } catch (error) {
+        console.error("LOAD MY JOBS ERROR:", error);
 
-        console.error(
-            "LOAD MY JOBS ERROR:",
-            error
-        );
-
-
-        const container =
-            document.getElementById(
-                "myJobsContainer"
-            );
-
-
-        const legacyContainer =
-            document.getElementById(
-                "myJobs"
-            );
-
-
-        const errorHtml = `
-
+        const message = `
             <div class="empty-state">
-
                 <div>⚠️</div>
-
-                <h3>
-                    Unable to load jobs
-                </h3>
-
-                <p>
-                    Check that your backend and job routes are running.
-                </p>
-
+                <h3>Unable to load jobs</h3>
+                <p>Check your internet connection and backend job routes.</p>
             </div>
-
         `;
 
+        const container = document.getElementById("myJobsContainer");
+        const legacyContainer = document.getElementById("myJobs");
 
-        if (container) {
-            container.innerHTML =
-                errorHtml;
-        }
-
-
-        if (legacyContainer) {
-            legacyContainer.innerHTML =
-                errorHtml;
-        }
+        if (container) container.innerHTML = message;
+        if (legacyContainer) legacyContainer.innerHTML = message;
     }
 }
 
-
-/* =========================================
-   RENDER JOBS
-========================================= */
+/* DISPLAY JOBS */
 
 function renderJobs() {
-
-    const container =
-        document.getElementById(
-            "myJobsContainer"
-        );
-
-
-    const legacyContainer =
-        document.getElementById(
-            "myJobs"
-        );
-
-
-    const recent =
-        document.getElementById(
-            "recentJobs"
-        );
-
-
-    /* =========================================
-       NO JOBS
-    ========================================= */
+    const container = document.getElementById("myJobsContainer");
+    const legacyContainer = document.getElementById("myJobs");
+    const recent = document.getElementById("recentJobs");
 
     if (!allJobs.length) {
-
         const emptyHtml = `
-
             <div class="empty-state">
-
                 <div>📋</div>
-
-                <h3>
-                    No jobs yet
-                </h3>
-
-                <p>
-                    Post your first job and connect with a professional.
-                </p>
-
-                <button
-                    type="button"
-                    class="primary-btn"
-                    onclick="openJobModal()"
-                >
+                <h3>No jobs yet</h3>
+                <p>Post your first job to connect with a professional.</p>
+                <button type="button" class="primary-btn" onclick="openJobModal()">
                     Post a Job
                 </button>
-
             </div>
-
         `;
 
-
-        if (container) {
-            container.innerHTML =
-                emptyHtml;
-        }
-
-
-        if (legacyContainer) {
-            legacyContainer.innerHTML =
-                emptyHtml;
-        }
-
-
-        if (recent) {
-            recent.innerHTML =
-                emptyHtml;
-        }
-
+        if (container) container.innerHTML = emptyHtml;
+        if (legacyContainer) legacyContainer.innerHTML = emptyHtml;
+        if (recent) recent.innerHTML = emptyHtml;
 
         return;
     }
 
-
-    /* =========================================
-       MAIN JOBS
-    ========================================= */
-
-    const html =
-        allJobs
-            .map(job => {
-
-                const serviceName =
-                    job.service ||
-                    job.title ||
-                    "Service";
-
-
-                const status =
-                    job.status ||
-                    "pending";
-
-
-                const location =
-                    job.location ||
-                    "Not specified";
-
-
-                const description =
-                    job.description ||
-                    "No description provided.";
-
-
-                const budget =
-                    Number(
-                        job.budget || 0
-                    );
-
-
-                return `
-
-                    <div class="job-card">
-
-                        <div>
-
-                            <h3>
-                                ${escapeHtml(
-                                    serviceName
-                                )}
-                            </h3>
-
-
-                            <p>
-                                <strong>
-                                    Service:
-                                </strong>
-
-                                ${escapeHtml(
-                                    serviceName
-                                )}
-                            </p>
-
-
-                            <p>
-                                <strong>
-                                    Location:
-                                </strong>
-
-                                ${escapeHtml(
-                                    location
-                                )}
-                            </p>
-
-
-                            <p>
-                                ${escapeHtml(
-                                    description
-                                )}
-                            </p>
-
-
-                            <p>
-                                <strong>
-                                    Budget:
-                                </strong>
-
-                                ₹${budget}
-                            </p>
-
-
-                            ${
-                                job.worker
-                                    ? `
-
-                                        <p>
-                                            <strong>
-                                                Worker:
-                                            </strong>
-
-                                            ${escapeHtml(
-                                                job.worker.name ||
-                                                "Worker"
-                                            )}
-                                        </p>
-
-                                    `
-                                    : ""
-                            }
-
-                        </div>
-
-
-                        <span class="job-status">
-                            ${escapeHtml(
-                                status
-                            )}
-                        </span>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
-
-
-    if (container) {
-
-        container.innerHTML =
-            html;
-    }
-
-
-    if (legacyContainer) {
-
-        legacyContainer.innerHTML =
-            html;
-    }
-
-
-    /* =========================================
-       RECENT JOBS
-    ========================================= */
-
-    if (recent) {
-
-        recent.innerHTML =
-            allJobs
-                .slice(0, 3)
-                .map(job => {
-
-                    const serviceName =
-                        job.service ||
-                        job.title ||
-                        "Service";
-
-
-                    return `
-
-                        <div class="job-card">
-
-                            <div>
-
-                                <h3>
-                                    ${escapeHtml(
-                                        serviceName
-                                    )}
-                                </h3>
-
-                                <p>
-                                    ${escapeHtml(
-                                        job.location ||
-                                        ""
-                                    )}
-                                </p>
-
-                            </div>
-
-
-                            <span class="job-status">
-                                ${escapeHtml(
-                                    job.status ||
-                                    "pending"
-                                )}
-                            </span>
-
-                        </div>
-
-                    `;
-                })
-                .join("");
-    }
-}
-
-
-/* =========================================
-   DASHBOARD STATS
-========================================= */
-
-function updateDashboardStats() {
-
-    const total =
-        allJobs.length;
-
-
-    const pending =
-        allJobs.filter(
-            job => {
-
-                const status =
-                    String(
-                        job.status ||
-                        "pending"
-                    )
-                    .toLowerCase();
-
-
-                return (
-                    status === "pending" ||
-                    status === "requested"
-                );
-            }
-        )
-        .length;
-
-
-    const completed =
-        allJobs.filter(
-            job => {
-
-                return (
-                    String(
-                        job.status ||
-                        ""
-                    )
-                    .toLowerCase() ===
-                    "completed"
-                );
-            }
-        )
-        .length;
-
-
-    const totalJobs =
-        document.getElementById(
-            "totalJobs"
-        );
-
-
-    const pendingJobs =
-        document.getElementById(
-            "pendingJobs"
-        );
-
-
-    const completedJobs =
-        document.getElementById(
-            "completedJobs"
-        );
-
-
-    const servicesUsed =
-        document.getElementById(
-            "servicesUsed"
-        );
-
-
-    if (totalJobs) {
-        totalJobs.textContent =
-            total;
-    }
-
-
-    if (pendingJobs) {
-        pendingJobs.textContent =
-            pending;
-    }
-
-
-    if (completedJobs) {
-        completedJobs.textContent =
-            completed;
-    }
-
-
-    if (servicesUsed) {
-        servicesUsed.textContent =
-            total;
-    }
-}
-
-
-/* =========================================
-   PROFILE
-========================================= */
-
-async function updateProfile(event) {
-
-    event.preventDefault();
-
-
-    const name =
-        document
-            .getElementById(
-                "profileNameInput"
-            )
-            ?.value
-            ?.trim() || "";
-
-
-    const email =
-        document
-            .getElementById(
-                "profileEmailInput"
-            )
-            ?.value
-            ?.trim() || "";
-
-
-    const phone =
-        document
-            .getElementById(
-                "profilePhoneInput"
-            )
-            ?.value
-            ?.trim() || "";
-
-
-    if (!name || !email) {
-
-        alert(
-            "Name and email are required."
-        );
-
-        return;
-    }
-
-
-    const user =
-        getUser() || {};
-
-
-    const updatedUser = {
-
-        ...user,
-
-        name:
-            name,
-
-        email:
-            email,
-
-        phone:
-            phone
-
+    const jobHtml = job => {
+        const service = job.service || job.title || "Service";
+        const status = job.status || "pending";
+        const location = job.location || "Not specified";
+        const description = job.description || "No description provided.";
+        const budget = Number(job.budget) || 0;
+
+        return `
+            <div class="job-card">
+                <div>
+                    <h3>${escapeHtml(service)}</h3>
+                    <p><strong>Service:</strong> ${escapeHtml(service)}</p>
+                    <p><strong>Location:</strong> ${escapeHtml(location)}</p>
+                    <p>${escapeHtml(description)}</p>
+                    <p><strong>Budget:</strong> ₹${budget}</p>
+                    ${job.worker ? `
+                        <p><strong>Worker:</strong>
+                            ${escapeHtml(job.worker.name || "Worker")}
+                        </p>
+                    ` : ""}
+                </div>
+                <span class="job-status">${escapeHtml(status)}</span>
+            </div>
+        `;
     };
 
+    const html = allJobs.map(jobHtml).join("");
 
-    localStorage.setItem(
-        "connectUsUser",
-        JSON.stringify(
-            updatedUser
-        )
-    );
+    if (container) container.innerHTML = html;
+    if (legacyContainer) legacyContainer.innerHTML = html;
 
-
-    loadUserInfo();
-
-
-    alert(
-        "Profile updated successfully."
-    );
+    if (recent) {
+        recent.innerHTML = allJobs.slice(0, 3).map(job => `
+            <div class="job-card">
+                <div>
+                    <h3>${escapeHtml(job.service || job.title || "Service")}</h3>
+                    <p>${escapeHtml(job.location || "")}</p>
+                </div>
+                <span class="job-status">
+                    ${escapeHtml(job.status || "pending")}
+                </span>
+            </div>
+        `).join("");
+    }
 }
 
+/* DASHBOARD STATISTICS */
+
+function updateDashboardStats() {
+    const total = allJobs.length;
+
+    const pending = allJobs.filter(job => {
+        const status = String(job.status || "pending").toLowerCase();
+        return status === "pending" || status === "requested";
+    }).length;
+
+    const completed = allJobs.filter(job =>
+        String(job.status || "").toLowerCase() === "completed"
+    ).length;
+
+    const stats = {
+        totalJobs: total,
+        pendingJobs: pending,
+        completedJobs: completed,
+        servicesUsed: total
+    };
+
+    Object.entries(stats).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    });
+}
+
+/* PROFILE */
+
+async function updateProfile(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("profileNameInput")?.value.trim() || "";
+    const email = document.getElementById("profileEmailInput")?.value.trim() || "";
+    const phone = document.getElementById("profilePhoneInput")?.value.trim() || "";
+
+    if (!name || !email) {
+        alert("Name and email are required.");
+        return;
+    }
+
+    const user = getUser() || {};
+
+    const updatedUser = {
+        ...user,
+        name,
+        email,
+        phone
+    };
+
+    localStorage.setItem("connectUsUser", JSON.stringify(updatedUser));
+
+    loadUserInfo();
+    alert("Profile updated locally.");
+
+    // This function updates local storage only.
+    // Add a backend profile API call if your server supports it.
+}
+
+/* SETTINGS */
+
+function openSettings() {
+    document.getElementById("settingsOverlay")?.classList.add("show");
+}
+
+function closeSettings() {
+    document.getElementById("settingsOverlay")?.classList.remove("show");
+}
+
+function toggleDarkMode() {
+    const enabled = document.getElementById("darkModeToggle")?.checked || false;
+
+    document.body.classList.toggle("dark", enabled);
+    localStorage.setItem("connectUsDarkMode", String(enabled));
+}
+
+function loadDarkMode() {
+    const enabled = localStorage.getItem("connectUsDarkMode") === "true";
+
+    document.body.classList.toggle("dark", enabled);
+
+    const toggle = document.getElementById("darkModeToggle");
+    if (toggle) toggle.checked = enabled;
+}
+
+/* NOTIFICATIONS */
+
+function showNotifications() {
+    alert("No new notifications.");
+}
+
+/* LOGOUT */
+
+function logoutUser() {
+    localStorage.removeItem("connectUsToken");
+    localStorage.removeItem("connectUsUser");
+    window.location.href = "auth.html";
+}
+
+/* HTML ESCAPING */
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function escapeJobText(value) {
+    return escapeHtml(value);
+}
+
+/* GLOBAL SEARCH */
+
+function setupGlobalSearch() {
+    const searchInputs = [
+        document.getElementById("globalSearch"),
+        document.getElementById("serviceSearch")
+    ].filter(Boolean);
+
+    searchInputs.forEach(input => {
+        input.addEventListener("input", () => {
+            searchInputs.forEach(otherInput => {
+                if (otherInput !== input) {
+                    otherInput.value = input.value;
+                }
+            });
+
+            if (input.value.trim()) {
+                showSectionByName("findServices");
+            }
+
+            searchServices();
+        });
+
+        input.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                showSectionByName("findServices");
+                searchServices();
+            }
+        });
+    });
+}
+
+/* START APPLICATION */
+
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!checkAuthentication()) return;
+
+    loadUserInfo();
+    loadDarkMode();
+    setupGlobalSearch();
+
+    await loadServices();
+    await loadMyJobs();
+});
 
 /* =========================================
-   SETTINGS
+   CONNECT US - SETTINGS BUTTON FIX
 ========================================= */
 
 function openSettings() {
+    const panel = document.getElementById("globalSettingsPanel");
+    const overlay = document.getElementById("globalSettingsOverlay");
 
-    document
-        .getElementById(
-            "settingsOverlay"
-        )
-        ?.classList.add("show");
+    if (!panel || !overlay) {
+        console.error("Settings panel or overlay not found.");
+        return;
+    }
+
+    panel.classList.add("open");
+    overlay.classList.add("open");
+
+    panel.setAttribute("aria-hidden", "false");
+    overlay.setAttribute("aria-hidden", "false");
+
+    document.body.style.overflow = "hidden";
 }
-
 
 function closeSettings() {
+    const panel = document.getElementById("globalSettingsPanel");
+    const overlay = document.getElementById("globalSettingsOverlay");
 
-    document
-        .getElementById(
-            "settingsOverlay"
-        )
-        ?.classList.remove("show");
+    panel?.classList.remove("open");
+    overlay?.classList.remove("open");
+
+    panel?.setAttribute("aria-hidden", "true");
+    overlay?.setAttribute("aria-hidden", "true");
+
+    document.body.style.overflow = "";
 }
 
-
-function toggleDarkMode() {
-
-    const toggle =
-        document.getElementById(
-            "darkModeToggle"
-        );
-
-
-    const enabled =
-        toggle?.checked || false;
-
-
-    document.body.classList.toggle(
-        "dark",
-        enabled
-    );
-
-
-    localStorage.setItem(
-        "connectUsDarkMode",
-        String(enabled)
-    );
-}
-
-
-function loadDarkMode() {
-
-    const enabled =
-        localStorage.getItem(
-            "connectUsDarkMode"
-        ) === "true";
-
-
-    document.body.classList.toggle(
-        "dark",
-        enabled
-    );
-
-
-    const toggle =
-        document.getElementById(
-            "darkModeToggle"
-        );
-
-
-    if (toggle) {
-        toggle.checked =
-            enabled;
-    }
-}
-
-
-/* =========================================
-   NOTIFICATIONS
-========================================= */
-
-function showNotifications() {
-
-    alert(
-        "No new notifications."
-    );
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-function logoutUser() {
-
-    localStorage.removeItem(
-        "connectUsToken"
-    );
-
-
-    localStorage.removeItem(
-        "connectUsUser"
-    );
-
-
-    window.location.href =
-        "auth.html";
-}
-
-
-/* =========================================
-   HTML SECURITY
-========================================= */
-
-function escapeHtml(value) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-}
-
-
-/* =========================================
-   SAFE JOB TEXT
-========================================= */
-
-function escapeJobText(value) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-}
-
-
-/* =========================================
-   GLOBAL SEARCH
-========================================= */
-
-function setupGlobalSearch() {
-
-    const searchInputs = [
-
-        document.getElementById(
-            "globalSearch"
-        ),
-
-        document.getElementById(
-            "serviceSearch"
-        )
-
-    ]
-    .filter(Boolean);
-
-
-    searchInputs.forEach(
-        input => {
-
-            input.addEventListener(
-                "input",
-                () => {
-
-                    const value =
-                        input.value
-                            .trim()
-                            .toLowerCase();
-
-
-                    searchInputs
-                        .forEach(
-                            otherInput => {
-
-                                if (
-                                    otherInput !==
-                                    input
-                                ) {
-
-                                    otherInput.value =
-                                        input.value;
-                                }
-                            }
-                        );
-
-
-                    if (value) {
-
-                        showSectionByName(
-                            "findServices"
-                        );
-                    }
-
-
-                    const filtered =
-                        allServices.filter(
-                            service => {
-
-                                const name =
-                                    String(
-                                        service.name ||
-                                        ""
-                                    )
-                                    .toLowerCase();
-
-
-                                const category =
-                                    String(
-                                        service.category ||
-                                        ""
-                                    )
-                                    .toLowerCase();
-
-
-                                const description =
-                                    String(
-                                        service.description ||
-                                        ""
-                                    )
-                                    .toLowerCase();
-
-
-                                return (
-                                    name.includes(value) ||
-                                    category.includes(value) ||
-                                    description.includes(value)
-                                );
-                            }
-                        );
-
-
-                    renderServices(
-                        filtered
-                    );
-                }
-            );
-
-
-            input.addEventListener(
-                "keydown",
-                event => {
-
-                    if (
-                        event.key ===
-                        "Enter"
-                    ) {
-
-                        event.preventDefault();
-
-                        showSectionByName(
-                            "findServices"
-                        );
-
-                        searchServices();
-                    }
-                }
-            );
+document.addEventListener("DOMContentLoaded", function () {
+    const closeButton = document.getElementById("globalSettingsClose");
+    const overlay = document.getElementById("globalSettingsOverlay");
+
+    closeButton?.addEventListener("click", closeSettings);
+    overlay?.addEventListener("click", closeSettings);
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeSettings();
         }
-    );
-}
-
-
-/* =========================================
-   START APPLICATION
-========================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        if (
-            !checkAuthentication()
-        ) {
-            return;
-        }
-
-
-        loadUserInfo();
-
-        loadDarkMode();
-
-        setupGlobalSearch();
-
-
-        await loadServices();
-
-        await loadMyJobs();
-
-    }
-);
+    });
+});

@@ -833,5 +833,219 @@
 <script src="language-system.js"></script>
 
 
+
+<!-- CONNECT US: SETTINGS BUTTON EMERGENCY FIX -->
+<script>
+(function () {
+    function setupSettings() {
+        const panel = document.getElementById("globalSettingsPanel");
+        const overlay = document.getElementById("globalSettingsOverlay");
+        const closeButton = document.getElementById("globalSettingsClose");
+
+        // Support the old settings panel if the new one is absent.
+        const oldPanel = document.getElementById("settingsOverlay");
+
+        window.openSettings = function () {
+            const target = document.getElementById("globalSettingsPanel");
+            const bg = document.getElementById("globalSettingsOverlay");
+
+            if (target && bg) {
+                target.classList.add("open", "active", "is-open");
+                bg.classList.add("open", "active", "is-open");
+
+                target.style.setProperty("position", "fixed", "important");
+                target.style.setProperty("top", "0", "important");
+                target.style.setProperty("right", "0", "important");
+                target.style.setProperty("bottom", "0", "important");
+                target.style.setProperty("width", "min(380px, 90vw)", "important");
+                target.style.setProperty("height", "100vh", "important");
+                target.style.setProperty("display", "flex", "important");
+                target.style.setProperty("flex-direction", "column", "important");
+                target.style.setProperty("overflow-y", "auto", "important");
+                target.style.setProperty("background", "#18221b", "important");
+                target.style.setProperty("color", "#f4f7f3", "important");
+                target.style.setProperty("z-index", "99999", "important");
+                target.style.setProperty("transform", "translateX(0)", "important");
+                target.style.setProperty("visibility", "visible", "important");
+                target.style.setProperty("pointer-events", "auto", "important");
+
+                bg.style.setProperty("position", "fixed", "important");
+                bg.style.setProperty("inset", "0", "important");
+                bg.style.setProperty("display", "block", "important");
+                bg.style.setProperty("background", "rgba(0,0,0,.6)", "important");
+                bg.style.setProperty("z-index", "99998", "important");
+                bg.style.setProperty("visibility", "visible", "important");
+                bg.style.setProperty("opacity", "1", "important");
+                bg.style.setProperty("pointer-events", "auto", "important");
+
+                target.setAttribute("aria-hidden", "false");
+                bg.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+            } else if (oldPanel) {
+                oldPanel.classList.add("show");
+                oldPanel.style.setProperty("display", "flex", "important");
+                oldPanel.style.setProperty("position", "fixed", "important");
+                oldPanel.style.setProperty("inset", "0", "important");
+                oldPanel.style.setProperty("z-index", "99999", "important");
+            } else {
+                console.error("Settings panel not found. Check customer.html IDs.");
+                alert("Settings panel not found. Please check customer.html.");
+            }
+        };
+
+        window.closeSettings = function () {
+            const target = document.getElementById("globalSettingsPanel");
+            const bg = document.getElementById("globalSettingsOverlay");
+
+            target?.classList.remove("open", "active", "is-open");
+            bg?.classList.remove("open", "active", "is-open");
+
+            if (target) {
+                target.style.setProperty("visibility", "hidden", "important");
+                target.style.setProperty("pointer-events", "none", "important");
+                target.style.setProperty("transform", "translateX(105%)", "important");
+            }
+
+            if (bg) {
+                bg.style.setProperty("visibility", "hidden", "important");
+                bg.style.setProperty("opacity", "0", "important");
+                bg.style.setProperty("pointer-events", "none", "important");
+            }
+
+            oldPanel?.classList.remove("show");
+            document.body.style.overflow = "";
+        };
+
+        closeButton?.addEventListener("click", window.closeSettings);
+        overlay?.addEventListener("click", window.closeSettings);
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") window.closeSettings();
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupSettings);
+    } else {
+        setupSettings();
+    }
+})();
+</script>
+
+<script>
+/* CONNECT US - FIX DARK MODE AND EYE COMFORT */
+(function () {
+    function initializeAppearanceSettings() {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const eyeComfortToggle = document.getElementById("eyeComfortToggle");
+
+        function applyDarkMode(enabled) {
+            document.body.classList.toggle("dark", enabled);
+            document.documentElement.classList.toggle("dark", enabled);
+
+            // Support existing dark-mode styles.
+            document.body.classList.toggle("dark-mode", enabled);
+
+            if (darkModeToggle) {
+                darkModeToggle.checked = enabled;
+            }
+
+            try {
+                localStorage.setItem("connectUsDarkMode", String(enabled));
+            } catch (error) {
+                console.warn("Could not save dark mode preference.", error);
+            }
+        }
+
+        function applyEyeComfort(enabled) {
+            document.body.classList.toggle("eye-comfort", enabled);
+
+            let style = document.getElementById("eyeComfortStyle");
+
+            if (!style) {
+                style = document.createElement("style");
+                style.id = "eyeComfortStyle";
+                document.head.appendChild(style);
+            }
+
+            style.textContent = enabled
+                ? `
+                    body.eye-comfort {
+                        background: #171710 !important;
+                        filter: sepia(15%);
+                    }
+                    body.eye-comfort .topbar,
+                    body.eye-comfort .sidebar,
+                    body.eye-comfort .stat-card,
+                    body.eye-comfort .service-card,
+                    body.eye-comfort .quick-grid button {
+                        background-color: #24251c !important;
+                    }
+                `
+                : "";
+
+            if (eyeComfortToggle) {
+                eyeComfortToggle.checked = enabled;
+            }
+
+            try {
+                localStorage.setItem("connectUsEyeComfort", String(enabled));
+            } catch (error) {
+                console.warn("Could not save eye comfort preference.", error);
+            }
+        }
+
+        // Restore saved settings.
+        let savedDarkMode = false;
+        let savedEyeComfort = false;
+
+        try {
+            savedDarkMode =
+                localStorage.getItem("connectUsDarkMode") === "true";
+
+            savedEyeComfort =
+                localStorage.getItem("connectUsEyeComfort") === "true";
+        } catch (error) {
+            console.warn("Could not read appearance settings.", error);
+        }
+
+        applyDarkMode(savedDarkMode);
+        applyEyeComfort(savedEyeComfort);
+
+        // Connect the switches to the actual page.
+        if (darkModeToggle && !darkModeToggle.dataset.themeConnected) {
+            darkModeToggle.dataset.themeConnected = "true";
+
+            darkModeToggle.addEventListener("change", function () {
+                applyDarkMode(this.checked);
+            });
+        }
+
+        if (eyeComfortToggle && !eyeComfortToggle.dataset.themeConnected) {
+            eyeComfortToggle.dataset.themeConnected = "true";
+
+            eyeComfortToggle.addEventListener("change", function () {
+                applyEyeComfort(this.checked);
+            });
+        }
+
+        // Make functions available to existing settings code.
+        window.applyDarkMode = applyDarkMode;
+        window.applyEyeComfort = applyEyeComfort;
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeAppearanceSettings
+        );
+    } else {
+        initializeAppearanceSettings();
+    }
+})();
+</script>
 </body>
 </html>
+
+
+
